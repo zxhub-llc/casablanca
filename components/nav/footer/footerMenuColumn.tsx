@@ -1,0 +1,57 @@
+"use client";
+
+import Link from "next/link";
+import { ZXMenuItem } from "@/lib/graphql";
+import { cn } from "@/lib/utils";
+import { FooterMenuLink } from "./footerMenuLink";
+
+interface FooterMenuColumnProps {
+    item: ZXMenuItem;
+}
+
+export function FooterMenuColumn({ item }: FooterMenuColumnProps) {
+    const hasChildren = !!item.children?.length;
+
+    const isPlaceholder =
+        item.url === "#" ||
+        item.url === "/#" ||
+        !item.url;
+
+    return (
+        <div className="flex flex-col gap-6">
+            {/* COLUMN TITLE */}
+            {isPlaceholder ? (
+                <div
+                    className={cn(
+                        "text-sm font-semibold uppercase tracking-wide",
+                        "text-neutral-800 dark:text-white"
+                    )}
+                >
+                    {item.title}
+                </div>
+            ) : (
+                <Link
+                    href={item.url}
+                    className={cn(
+                        "text-sm font-semibold uppercase tracking-wide",
+                        "text-neutral-800 dark:text-white transition-colors hover:text-primary"
+                    )}
+                >
+                    {item.title}
+                </Link>
+            )}
+
+            {/* CHILDREN */}
+            {hasChildren && (
+                <div className="flex flex-col gap-1 md:gap-2">
+                    {item.children!.map((child) => (
+                        <FooterMenuLink
+                            key={child.id}
+                            item={child}
+                        />
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+}

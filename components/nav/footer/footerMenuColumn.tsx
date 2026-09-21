@@ -24,7 +24,7 @@ export function FooterMenuColumn({ item }: FooterMenuColumnProps) {
                 <div
                     className={cn(
                         "text-sm font-semibold uppercase tracking-wide",
-                        "text-neutral-800 dark:text-white"
+                        "text-foreground"
                     )}
                 >
                     {item.title}
@@ -34,7 +34,7 @@ export function FooterMenuColumn({ item }: FooterMenuColumnProps) {
                     href={item.url}
                     className={cn(
                         "text-sm font-semibold uppercase tracking-wide",
-                        "text-neutral-800 dark:text-white transition-colors hover:text-primary"
+                        "text-foreground transition-colors hover:text-primary"
                     )}
                 >
                     {item.title}

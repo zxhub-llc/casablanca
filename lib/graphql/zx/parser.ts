@@ -89,7 +89,6 @@ export type ZXSectionParsed =
             showBanner?: boolean;
         };
     }
-
     | {
         layout: "contact";
         data: {
@@ -104,6 +103,10 @@ export type ZXSectionParsed =
             heroImage?: string;
             heroMobile?: string;
             showBanner?: boolean;
+            buttonText?: string;
+            buttonUrl?: string;
+            secondaryButtonText?: string;
+            secondaryButtonUrl?: string;
         };
     }
 
@@ -387,6 +390,10 @@ export function parseSections(
                                 heroMobile: raw.hero_mobile?.url,
                                 formId: raw.form_id,
                                 showBanner: raw.show_banner ?? false,
+                                buttonText: raw.button_text,
+                                buttonUrl: raw.button_url,
+                                secondaryButtonText: raw.secondary_button_text,
+                                secondaryButtonUrl: raw.secondary_button_url,
                             },
                         };
 

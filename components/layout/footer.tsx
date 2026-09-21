@@ -64,10 +64,10 @@ export function Footer({
   const currentYear = new Date().getFullYear();
 
   return (
-    <div className="bg-background px-4 pb-4 md:px-6 md:py-6">
+    <div className="bg-[#001125] px-4 pb-4 md:px-6 md:py-6">
       <footer
-        className="bg-brand-soft w-full max-w-screen mx-auto text-black pt-8 lg:pt-12 px-4 sm:px-4 md:px-4 lg:px-8 rounded-3xl overflow-hidden">
-        <div className="w-full max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-6 gap-8 md:gap-12 lg:gap-16">
+        className="bg-secondary w-full max-w-screen mx-auto text-black pt-8 lg:pt-12 px-4 sm:px-4 md:px-4 lg:px-8 rounded-3xl overflow-hidden">
+        <div className="w-full max-w-8xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-6 gap-8 md:gap-12 lg:gap-16">
           {/* LEFT */}
           <div className="lg:col-span-2 space-y-6 flex flex-col items-center justify-center lg:items-start lg:justify-start">
             <Link href="/" className="flex items-center justify-center">
@@ -77,17 +77,24 @@ export function Footer({
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.25 }}
               >
-                <Image
-                  src={logoSrc || ""}
-                  alt={site?.title || "Logo"}
-                  width={190}
-                  height={40}
-                  className="brightness-0 invert"
-                />
+
+                {logoSrc ? (
+                  <Image
+                    src={logoSrc || ""}
+                    alt={site?.title || "Logo"}
+                    width={190}
+                    height={40}
+                    className="brightness-0 invert"
+                  />
+                ) : (
+                  <span className="font-serif text-lg tracking-[0.35em] uppercase">
+                    {site?.title ?? "Casa Blanca"}
+                  </span>
+                )}
               </motion.div>
             </Link>
 
-            <p className="text-sm/6 text-neutral-800 dark:text-white w-full text-center lg:text-left lg:max-w-sm">
+            <p className="text-sm/6 text-foreground w-full text-center lg:text-left lg:max-w-sm">
               {site?.description}
             </p>
           </div>
@@ -99,15 +106,15 @@ export function Footer({
         </div>
 
         {/* BIG TEXT */}
-        <div className="lg:h-100 h-40 flex items-center justify-center">
+        <div className="lg:h-60 flex items-center justify-center">
           <TextGradientEffect text="CASA BLANCA" />
         </div>
 
         {/* BOTTOM */}
         <div>
-          <div className="max-w-screen mx-auto mb-4 flex flex-col gap-4 md:flex-row justify-between items-center text-neutral-800 dark:text-white">
+          <div className="max-w-screen mx-auto mb-4 flex flex-col gap-4 md:flex-row justify-between items-center text-foreground">
             <div className="flex flex-col md:flex-row items-center gap-1 text-sm">
-              <span>© 2023{currentYear > 2023 ? ` - ${currentYear}` : ""}</span>
+              <span>© {currentYear}</span>
               <span>{site?.title}</span>
             </div>
 
@@ -129,7 +136,7 @@ export function Footer({
             </div>
           </div>
 
-          <div className="pb-4 text-center text-sm text-neutral-800 dark:text-white">
+          <div className="pb-4 text-center text-sm text-foreground">
             Desarrollado por{" "}
             <Link
               href="https://stuvvion.com"

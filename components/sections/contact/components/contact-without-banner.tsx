@@ -6,6 +6,8 @@ import { ContactLinksSection } from "./contact-links-section";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Facebook02Icon, InstagramIcon, Linkedin01Icon, NewTwitterIcon, ThreadsIcon, TiktokIcon, WhatsappBusinessIcon, YoutubeIcon } from "@hugeicons/core-free-icons";
 import { ZXContactForm, ZXSocial } from "@/lib/graphql";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 interface ContactWithoutBannerProps {
     contact?: ZXContactForm | null;
@@ -60,7 +62,7 @@ export default function ContactWithoutBanner({
         : ["", ""];
 
     return (
-        <div className="flex flex-col lg:flex-row justify-between gap-4 lg:gap-12 h-full min-h-screen">
+        <div className="flex flex-col lg:flex-row justify-between gap-4 lg:gap-12 h-full min-h-screen items-start">
             <div className="flex flex-col justify-center items-center md:items-start gap-4 w-full max-w-5xl px-2 sm:px-8 py-2 lg:py-24">
                 {highlight && (
                     <motion.div
@@ -112,8 +114,8 @@ export default function ContactWithoutBanner({
                             duration: 0.8,
                             ease: [0.22, 1, 0.36, 1],
                         }}
-                        className="w-full max-w-4xl rounded-2xl sm:bg-black/20 backdrop-blur-none sm:backdrop-blur-xs px-3 py-2">
-                        <p className="text-base sm:text-lg lg:text-sm leading-relaxed text-white text-center sm:text-start">
+                        className="w-full max-w-4xl px-3 py-2">
+                        <p className="text-base sm:text-lg lg:text-lg leading-relaxed text-white text-center sm:text-start">
                             {description}
                         </p>
                     </motion.div>
@@ -121,20 +123,29 @@ export default function ContactWithoutBanner({
                 {(buttonText || secondaryButtonText) && (
                     <div className="flex flex-wrap items-center gap-4 w-full max-w-4xl pt-2">
                         {buttonText && buttonUrl && (
-                            <a
-                                href={buttonUrl}
-                                className="inline-flex items-center justify-center rounded-full bg-white px-6.py-3 text-sm font-medium text-black transition-all hover:bg-white/90"
+                            <Button
+                                asChild
+                                className="rounded-full h-12 px-4 bg-white text-foreground hover:bg-white hover:text-foreground relative group"
                             >
-                                {buttonText}
-                            </a>
+                                <Link href={buttonUrl}>
+                                    <span className="relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-current after:transition-all after:duration-300 hover:after:w-full">
+                                        {buttonText}
+                                    </span>
+                                </Link>
+                            </Button>
                         )}
                         {secondaryButtonText && secondaryButtonUrl && (
-                            <a
-                                href={secondaryButtonUrl}
-                                className="inline-flex items-center justify-center rounded-full border border-white/20 bg-black/20 px-6 py-3 text-sm font-medium text-white backdrop-blur-md transition-all hover:bg-white/10"
+                            <Button
+                                asChild
+                                className="rounded-full h-12 px-4 hover:bg-primary hover:text-primary-foreground group"
                             >
-                                {secondaryButtonText}
-                            </a>
+                                <Link href={secondaryButtonUrl}>
+                                    <span className="relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-current after:transition-all after:duration-300 hover:after:w-full">
+                                        {secondaryButtonText}
+                                    </span>
+                                </Link>
+                            </Button>
+
                         )}
                     </div>
                 )}
@@ -232,7 +243,7 @@ export default function ContactWithoutBanner({
                     )}
                 </div>
             </div>
-            <div className="w-full lg:w-1/3 lg:flex lg:items-center lg:self-stretch pb-12 sm:py-0">
+            <div className="w-full lg:w-1/3 lg:flex lg:items-start lg:self-stretch mt-20 sm:py-0">
                 <div className="relative shadow-input w-full rounded-2xl bg-white p-8 dark:bg-black items-center">
                     <div className="pointer-events-none absolute inset-0 opacity-[0.07]">
                         <div

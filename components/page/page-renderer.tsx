@@ -51,8 +51,8 @@ export default async function PageRenderer({
     const parsed =
         parseSections(sections);
 
-    console.log("=== [DEBUG WP SECTIONS RAW] ===", JSON.stringify(sections, null, 2));
-    console.log("=== [DEBUG PARSED SECTIONS] ===", JSON.stringify(parsed, null, 2));
+    // console.log("=== [DEBUG WP SECTIONS RAW] ===", JSON.stringify(sections, null, 2));
+    // console.log("=== [DEBUG PARSED SECTIONS] ===", JSON.stringify(parsed, null, 2));
 
     // ── FILTER SECTIONS ───────────────────────────
 
@@ -530,6 +530,10 @@ export default async function PageRenderer({
                                     heroMobile={section.data.heroMobile}
                                     lang={lang}
                                     showBanner={section.data.showBanner}
+                                    buttonText={section.data.buttonText}
+                                    buttonUrl={section.data.buttonUrl}
+                                    secondaryButtonText={section.data.secondaryButtonText}
+                                    secondaryButtonUrl={section.data.secondaryButtonUrl}
                                 />
                             );
                         }

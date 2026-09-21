@@ -12,10 +12,10 @@ interface TextGradientEffectProps {
 
 export const TextGradientEffect = ({
     text,
-    color = "var(--brand-foreground)",
+    color = "#001125",
     fontWeight = "900",
-    fontSize = "200",
-    yOffset = "90%"
+    fontSize = "122",
+    yOffset = "70%"
 }: TextGradientEffectProps) => {
 
     const reactGradientId = useId();

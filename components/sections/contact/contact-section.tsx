@@ -21,6 +21,10 @@ interface ContactSectionProps {
     map?: string;
     lang?: string;
     showBanner?: boolean;
+    buttonText?: string;
+    buttonUrl?: string;
+    secondaryButtonText?: string;
+    secondaryButtonUrl?: string;
 }
 
 export default function ContactSection({
@@ -37,6 +41,10 @@ export default function ContactSection({
     heroMobile,
     lang,
     showBanner,
+    buttonText,
+    buttonUrl,
+    secondaryButtonText,
+    secondaryButtonUrl,
 }: ContactSectionProps) {
     return (
         <>
@@ -68,8 +76,8 @@ export default function ContactSection({
                             className="hidden object-cover sm:block"
                         />
 
-                        <div className="absolute inset-x-0 top-0 h-1/4 bg-linear-to-b from-brand-background to-transparent" />
-                        <div className="absolute inset-x-0 bottom-0 h-1/4 bg-linear-to-t from-background to-transparent" />
+                        <div className="absolute inset-x-0 top-0 h-1/4 bg-linear-to-b from-[#001125] via-[#001125]/70 to-transparent" />
+                        <div className="absolute inset-x-0 bottom-0 h-1/4 bg-linear-to-t from-[#001125] to-transparent" />
                     </>
                 )}
                 <Container className="relative w-full max-w-screen min-h-screen text-black px-4 sm:px-4 md:px-4 lg:px-8 py-0 sm:py-0 rounded-3xl">
@@ -95,6 +103,10 @@ export default function ContactSection({
                             email={email}
                             phone={phone}
                             address={address}
+                            buttonText={buttonText}
+                            buttonUrl={buttonUrl}
+                            secondaryButtonText={secondaryButtonText}
+                            secondaryButtonUrl={secondaryButtonUrl}
                         />
                     )}
                 </Container>

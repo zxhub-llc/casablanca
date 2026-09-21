@@ -25,7 +25,6 @@ import { isAboutSection, isCaseStudiesSection, isContactSection, isCtaBannerSect
 import ContactSection from "../sections/contact/contact-section";
 import AboutSection from "../sections/about/about-section";
 import ServicesSection from "../sections/service/services-section";
-import ProductsSection from "../sections/product/product-section";
 import FeaturesSection from "../sections/feature/features-section";
 import FaqSection from "../sections/faq/faq-section";
 import NewsletterSection from "../sections/newsletter/newsletters-section";

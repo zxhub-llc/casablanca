@@ -215,25 +215,6 @@ export type ZXSectionParsed =
     }
 
     | {
-        layout: "woocommerce_products";
-        data: {
-            title?: string;
-            description?: string;
-            highlight?: string;
-            mode?: string;
-            products?: number[];
-            category?: number;
-            limit?: number;
-            columns?: number;
-            showPrice?: boolean;
-            showCart?: boolean;
-            heroImage?: string;
-            heroMobile?: string;
-            showBanner?: boolean;
-        };
-    }
-
-    | {
         layout: string;
         data: Record<string, unknown>;
     };
@@ -274,26 +255,6 @@ export function parseSections(
                                 highlight: raw.highlight,
                                 heroImage: raw.hero_image?.url,
                                 heroMobile: raw.hero_mobile?.url,
-                                showBanner: raw.show_banner ?? false,
-                            },
-                        };
-
-                    case "woocommerce_products":
-                        return {
-                            layout: "woocommerce_products" as const,
-                            data: {
-                                title: raw.title as string | undefined,
-                                description: raw.description as string | undefined,
-                                highlight: raw.highlight as string | undefined,
-                                mode: raw.mode as string | undefined,
-                                products: (raw.products ?? []) as number[],
-                                category: raw.category as number | undefined,
-                                limit: raw.limit as number | undefined,
-                                columns: raw.columns as number | undefined,
-                                showPrice: raw.show_price ?? true,
-                                showCart: raw.show_cart ?? true,
-                                heroImage: raw.hero_image?.url as string | undefined,
-                                heroMobile: raw.hero_mobile?.url as string | undefined,
                                 showBanner: raw.show_banner ?? false,
                             },
                         };

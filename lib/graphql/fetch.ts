@@ -19,7 +19,6 @@ export const CACHE_TTL = {
     cta: 86400,
     pages: 3600,
     posts: 300,
-    products: 600,
     forms: 86400,
     team: 86400,
     services: 3600,

@@ -21,7 +21,7 @@ export function HeroStatic({
         : 'items-center text-center'
 
   return (
-    <section className="relative h-[100dvh] w-full overflow-hidden">
+    <section className="relative h-screen md:h-[100dvh] w-screen overflow-hidden">
       {hero.imageUrl && (
         <img
           src={hero.imageUrl}
@@ -38,29 +38,29 @@ export function HeroStatic({
 
       <div
         className={`
-          relative z-10 flex h-full flex-col justify-end pt-10 pb-10 md:pt-30 md:pb-30 px-6 md:px-12
+          relative z-10 flex h-full flex-col justify-end pt-20 pb-20 md:pt-30 md:pb-30 px-6 md:px-12
           ${align}
         `}
       >
-        <div className="max-w-7xl text-white">
+        <div className="w-full md:max-w-7xl text-white">
           <div
             className="flex w-fit items-center justify-between gap-6 h-10 rounded-full px-4 py-2 backdrop-blur-xl transition-all duration-500 bg-white/10 shadow-sm">
             {title && (
-              <h3 className="text-md leading-tight md:text-lg uppercase">
+              <h3 className="text-sm leading-tight md:text-lg uppercase text-center md:text-end">
                 {title}
               </h3>
             )}
           </div>
 
           {hero.title && (
-            <h1 className="text-6xl font-extrabold leading-tight md:text-[150px]">
+            <h1 className="text-[52px] font-black font-jakarta md:font-extrabold leading-tight md:text-[150px] text-center md:text-start">
               {hero.title}
             </h1>
           )}
           <div
-            className="flex w-2xl items-center justify-between h-10 ">
+            className="flex w-full md:w-2xl items-center justify-between h-20 md:h-10 ">
             {hero.subtitle && (
-              <p className="mb-4 text-md leading-tight md:text-lg font-medium uppercase text-white/80">
+              <p className="mb-0 md:mb-4 text-sm md:text-md leading-tight md:text-lg font-semibold md:font-medium uppercase text-white/80 text-center md:text-start">
                 {hero.subtitle}
               </p>
             )}
@@ -68,7 +68,7 @@ export function HeroStatic({
 
           {(hero.ctaText ||
             hero.cta2Text) && (
-              <div className="mt-8 flex flex-wrap gap-4">
+              <div className="mt-0 md:mt-8 flex flex-col md:flex-row gap-2 md:gap-4">
                 {hero.ctaText &&
                   hero.ctaUrl && (
                     <Button

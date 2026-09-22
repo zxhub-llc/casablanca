@@ -45,8 +45,8 @@ export function Nav({ menu, site, cta, className, children, id }: NavProps) {
     >
       <div
         className={cn(
-          "mx-auto flex max-w-[1500px] items-center justify-between gap-6 h-16",
-          "rounded-full px-4 py-2 md:px-6 lg:px-8",
+          "mx-auto flex max-w-[1500px] items-center justify-between gap-6 h-12 md:h-16",
+          "rounded-full px-4 py-0 md:px-6 lg:px-8",
           "text-[#001B3D] backdrop-blur-xl transition-all duration-500",
           isScrolled
             ? "bg-[#EFEAE8]/20 shadow-lg"

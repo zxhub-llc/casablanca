@@ -76,14 +76,12 @@ export default function ServicesSection({
                 },
             });
 
-            // 1. Se abre el espacio de las cards y el título sube solo
             tl.to(cardsWrapRef.current, {
                 height: "auto",
                 duration: 1.5,
                 ease: "power2.inOut",
             });
 
-            // 2. Entran las cards de derecha a izquierda (con un pequeño solape)
             tl.to(
                 cards,
                 {
@@ -97,31 +95,68 @@ export default function ServicesSection({
                 "-=0.6"
             );
 
-            // 3. Pausa final antes de soltar el pin
             tl.to({}, { duration: 0.8 });
+
+            return () => {
+                gsap.set(cards, { clearProps: "position,top,left,width,height,zIndex" });
+            };
         });
 
-        // ── MÓVIL ──
+        // ── MÓVIL: stacking con el mismo pin que desktop ──
         mm.add("(max-width: 1023px)", () => {
             const cards = gsap.utils.toArray<HTMLElement>("[data-service-card]", sectionRef.current);
 
-            cards.forEach((card) => {
-                gsap.fromTo(
+            // convierte el grid en un stack: todas las cards ocupan el mismo espacio
+            gsap.set(cardsWrapRef.current, { position: "relative" });
+            gsap.set(cards, { position: "absolute", top: 0, left: 0, width: "100%", height: "100%" });
+
+            gsap.set(cards[0], { opacity: 1, y: 0, scale: 1, zIndex: 1 });
+            cards.forEach((card, i) => {
+                if (i === 0) return;
+                gsap.set(card, { opacity: 0, y: "100%", scale: 1, zIndex: i + 1 });
+            });
+
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: "top top",
+                    end: () => `+=${window.innerHeight * (cards.length * 0.9)}`,
+                    scrub: 1,
+                    pin: true,
+                    pinSpacing: true,
+                    anticipatePin: 1,
+                    invalidateOnRefresh: true,
+                },
+            });
+
+            cards.forEach((card, i) => {
+                if (i === 0) return;
+
+                // card entrante, tapa a la anterior
+                tl.to(
                     card,
-                    { opacity: 0, x: 80 },
+                    { opacity: 1, y: 0, duration: 1, ease: "power2.out" },
+                    i === 1 ? 0 : "-=0.35"
+                );
+
+                // card anterior se hunde/reduce, queda "debajo" de la pila
+                tl.to(
+                    cards[i - 1],
                     {
-                        opacity: 1,
-                        x: 0,
-                        duration: 0.8,
-                        ease: "power3.out",
-                        scrollTrigger: {
-                            trigger: card,
-                            start: "top 88%",
-                            toggleActions: "play none none reverse",
-                        },
-                    }
+                        scale: Math.max(0.85, 0.96 - (i - 1) * 0.03),
+                        y: -18 * i,
+                        duration: 1,
+                        ease: "power2.out",
+                    },
+                    "<"
                 );
             });
+
+            tl.to({}, { duration: 0.4 });
+
+            return () => {
+                gsap.set(cards, { clearProps: "position,top,left,width,height,zIndex,y,scale,opacity" });
+            };
         });
 
         return () => mm.revert();
@@ -145,7 +180,7 @@ export default function ServicesSection({
                 </div>
                 <Container className="mx-auto w-full max-w-screen px-4 py-12 text-black lg:px-16 lg:py-0">
                     {(title || description || highlight) && (
-                        <div className="mx-auto max-w-8xl space-y-6 text-center">
+                        <div className="mx-auto max-w-8xl space-y-6 text-center pb-12 md:pb-0">
                             {highlight && (
                                 <motion.p
                                     initial={{ opacity: 0, y: 10 }}
@@ -164,7 +199,7 @@ export default function ServicesSection({
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ delay: 0.1, duration: 0.5 }}
-                                    className="mt-2 text-5xl font-normal leading-[0.95] tracking-tighter text-foreground md:text-7xl font-jakarta"
+                                    className="mt-2 text-4xl font-normal leading-[0.95] tracking-tighter text-foreground md:text-7xl font-jakarta"
                                 >
                                     {title}
                                 </motion.h3>
@@ -185,7 +220,7 @@ export default function ServicesSection({
                     )}
 
                     <div ref={cardsWrapRef} className="lg:h-0 lg:overflow-hidden">
-                        <div className="mx-auto grid max-w-8xl grid-cols-1 gap-5 pb-4 pt-6 md:grid-cols-4 lg:pt-10">
+                        <div className="mx-auto grid grid-cols-1 max-w-8xl pb-4 pt-6 lg:grid-cols-4 lg:gap-5 lg:pt-10 max-lg:relative max-lg:!grid-cols-1 max-lg:!block max-lg:aspect-9/14 max-lg:max-w-sm max-lg:gap-0">
                             {items.map((item, i) => (
                                 <ServiceCard key={`${item.title}-${i}`} item={item} />
                             ))}
@@ -211,10 +246,8 @@ function ServiceCard({ item }: { item: CardItem }) {
                         : undefined
                 }
             >
-                {/* Degradado para legibilidad */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent transition-opacity duration-300 group-hover:from-black/90" />
 
-                {/* Contenido */}
                 <div className="relative z-10 bg-background rounded-full text-foreground px-4 w-fit h-8 flex items-center justify-center">
                     <h4 className="text-sm font-semibold font-jakarta">
                         {item.title}

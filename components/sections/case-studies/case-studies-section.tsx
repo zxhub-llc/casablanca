@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion } from "motion/react";
@@ -23,7 +23,8 @@ interface Photo {
     alt: string;
 }
 
-const PER_SLIDE = 5; // 1 grande + 4 pequeñas
+const PER_SLIDE_DESKTOP = 5; // 1 grande + 4 pequeñas
+const PER_SLIDE_MOBILE = 3; // 1 grande + 2 pequeñas
 
 const chunk = <T,>(arr: T[], size: number): T[][] =>
     Array.from({ length: Math.ceil(arr.length / size) }, (_, i) =>
@@ -42,23 +43,41 @@ export default function CaseStudiesSection({
     const touchX = useRef<number | null>(null);
 
     const [index, setIndex] = useState(0);
+    const [isDesktop, setIsDesktop] = useState(
+        () => typeof window !== "undefined" && window.matchMedia("(min-width: 1024px)").matches
+    );
 
-    const slides = useMemo<Photo[][]>(() => {
-        const photos = items
-            .flatMap((c) =>
-                c.thumbnail
-                    ? [{ id: `${c.id}-thumb`, src: c.thumbnail, alt: c.title ?? "" }]
-                    : (c.gallery ?? []).map((src, idx) => ({
-                        id: `${c.id}-${idx}`,
-                        src,
-                        alt: c.title ?? "",
-                    }))
-            )
-            .filter((p) => !!p.src);
-        return chunk(photos, PER_SLIDE);
-    }, [items]);
+    useEffect(() => {
+        const mql = window.matchMedia("(min-width: 1024px)");
+        const onChange = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+        mql.addEventListener("change", onChange);
+        return () => mql.removeEventListener("change", onChange);
+    }, []);
 
+    const photos = useMemo<Photo[]>(
+        () =>
+            items
+                .flatMap((c) =>
+                    c.thumbnail
+                        ? [{ id: `${c.id}-thumb`, src: c.thumbnail, alt: c.title ?? "" }]
+                        : (c.gallery ?? []).map((src, idx) => ({
+                            id: `${c.id}-${idx}`,
+                            src,
+                            alt: c.title ?? "",
+                        }))
+                )
+                .filter((p) => !!p.src),
+        [items]
+    );
+
+    const perSlide = isDesktop ? PER_SLIDE_DESKTOP : PER_SLIDE_MOBILE;
+    const slides = useMemo<Photo[][]>(() => chunk(photos, perSlide), [photos, perSlide]);
     const total = slides.length;
+
+    // el breakpoint cambia el tamaño de slide → el índice puede quedar fuera de rango
+    useEffect(() => {
+        setIndex((i) => Math.min(i, Math.max(total - 1, 0)));
+    }, [total]);
 
     const goTo = useCallback(
         (next: number) => {
@@ -79,8 +98,7 @@ export default function CaseStudiesSection({
 
         const mm = gsap.matchMedia();
 
-        // ── DESKTOP: título centrado → sube → entran las fotos del primer slide ──
-        mm.add("(min-width: 1024px)", () => {
+        const buildPinTimeline = () => {
             const els = gsap.utils.toArray<HTMLElement>(
                 '[data-slide="0"] [data-case-item]',
                 sectionRef.current
@@ -125,26 +143,13 @@ export default function CaseStudiesSection({
             tl.to("[data-carousel-ui]", { opacity: 1, duration: 0.4 }, ">-0.2");
 
             tl.to({}, { duration: 0.8 });
-        });
+        };
 
-        // ── MÓVIL: sin pin, el carrusel entra desde la derecha ──
-        mm.add("(max-width: 1023px)", () => {
-            gsap.fromTo(
-                viewportRef.current,
-                { opacity: 0, x: 80 },
-                {
-                    opacity: 1,
-                    x: 0,
-                    duration: 0.8,
-                    ease: "power3.out",
-                    scrollTrigger: {
-                        trigger: viewportRef.current,
-                        start: "top 88%",
-                        toggleActions: "play none none reverse",
-                    },
-                }
-            );
-        });
+        // ── DESKTOP: título centrado → sube → entran las fotos del primer slide ──
+        mm.add("(min-width: 1024px)", buildPinTimeline);
+
+        // ── MÓVIL: mismo pin, mosaico de 3 ──
+        mm.add("(max-width: 1023px)", buildPinTimeline);
 
         return () => mm.revert();
     }, [total]);
@@ -169,7 +174,6 @@ export default function CaseStudiesSection({
             ref={sectionRef}
             className="relative flex min-h-screen w-full items-center overflow-hidden bg-background"
         >
-            {/* Se añade pointer-events-none para que los degradados no bloqueen los clics de los botones */}
             <div className="absolute inset-x-0 top-0 h-1/4 bg-linear-to-b from-brand-background to-transparent pointer-events-none z-10" />
             <div className="absolute inset-x-0 bottom-0 h-1/4 bg-linear-to-t from-brand-background to-transparent pointer-events-none z-10" />
 
@@ -182,7 +186,7 @@ export default function CaseStudiesSection({
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.4 }}
-                                className="text-sm font-medium uppercase tracking-[0.2em] text-foreground font-jakarta"
+                                className="text-xs md:text-sm font-medium uppercase tracking-[0.2em] text-foreground font-jakarta"
                             >
                                 {highlight}
                             </motion.p>
@@ -194,7 +198,7 @@ export default function CaseStudiesSection({
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: 0.1, duration: 0.5 }}
-                                className="mt-2 text-4xl font-normal leading-tight text-foreground md:text-5xl font-jakarta"
+                                className="mt-2 text-lg font-normal leading-tight text-foreground md:text-5xl font-jakarta"
                             >
                                 {title}
                             </motion.h2>
@@ -202,7 +206,8 @@ export default function CaseStudiesSection({
                     </div>
                 )}
 
-                <div ref={wrapRef} className="lg:h-0 lg:overflow-hidden">
+                {/* altura controlada por GSAP (height:0 → auto) en ambos breakpoints */}
+                <div ref={wrapRef} className="overflow-hidden">
                     {/* Viewport: -mr-3 + pr-3 por slide = gap de 12px entre slides sin romper el xPercent */}
                     <div
                         ref={viewportRef}
@@ -212,7 +217,7 @@ export default function CaseStudiesSection({
                     >
                         <div ref={trackRef} className="flex will-change-transform">
                             {slides.map((group, s) => {
-                                const isMosaic = group.length === PER_SLIDE;
+                                const isMosaic = group.length === perSlide;
                                 return (
                                     <div
                                         key={s}

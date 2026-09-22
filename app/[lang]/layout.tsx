@@ -86,7 +86,7 @@ export default async function RootLayout({
         <meta name="google" content="notranslate" />
         <meta name="microsoft" content="notranslate" />
       </head>
-      <body className={cn("min-h-screen font-sans antialiased", plusJakartaSans.variable, fontJakarta.variable)}>
+      <body className={cn("min-h-screen font-sans antialiased bg-secondary", plusJakartaSans.variable, fontJakarta.variable)}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

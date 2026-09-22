@@ -34,7 +34,7 @@ export const Showcase = ({ content }: ShowcaseProps) => {
     setActiveCard((prev) => Math.max(0, prev - 1));
 
   return (
-    <div className="relative w-full max-w-8xl mx-auto h-[400px] md:h-[700px] rounded-none md:rounded-[32px] bg-transparent md:bg-black ">
+    <div className="relative w-full items-center justify-center max-w-8xl mx-auto h-auto md:h-[700px] rounded-none md:rounded-[32px] bg-transparent md:bg-muted-foreground/20 ">
       <DesktopUI
         content={content}
         activeCard={activeCard}
@@ -172,7 +172,7 @@ export const DesktopUI = ({
               }}
               className={cn(
                 "relative shrink-0 overflow-hidden rounded-[28px] left-4",
-                "bg-[#1e1e20] text-white",
+                "bg-muted-foreground/40 text-white",
                 "cursor-pointer"
               )}
               onClick={() => toggleItem(index)}
@@ -181,7 +181,7 @@ export const DesktopUI = ({
               {!isActive && (
                 <div className="header flex items-center justify-between px-5 h-[56px]">
                   <div className="flex items-center gap-3">
-                    <div className="p-1 rounded-full border border-neutral-600">
+                    <div className="p-1 rounded-full border border-muted-foreground/60">
                       <Plus size={16} strokeWidth={3} />
                     </div>
 
@@ -221,7 +221,7 @@ export const DesktopUI = ({
                 toggleItem(Math.max(0, activeIndex - 1));
               }
             }}
-            className="p-2 bg-[#1e1e20] rounded-full text-neutral-500 hover:text-[#f1ba0a] transition-colors"
+            className="p-2 bg-muted-foreground/40 rounded-full text-neutral-500 hover:text-[#f1ba0a] transition-colors"
           >
             <ChevronUp size={20} />
           </button>
@@ -234,7 +234,7 @@ export const DesktopUI = ({
                 toggleItem(Math.min(content.length - 1, activeIndex + 1));
               }
             }}
-            className="p-2 bg-[#1e1e20] rounded-full text-neutral-500 hover:text-[#f1ba0a] transition-colors"
+            className="p-2 bg-muted-foreground/40 rounded-full text-neutral-500 hover:text-[#f1ba0a] transition-colors"
           >
             <ChevronDown size={20} />
           </button>
@@ -248,7 +248,7 @@ export const DesktopUI = ({
 };
 
 /* ============================= */
-/* MOBILE VERSION */
+/* MOBILE VERSION — estilo apple.com (imagen full-bleed, caption + flechas superpuestas) */
 /* ============================= */
 
 const MobileUI = ({
@@ -275,121 +275,88 @@ const MobileUI = ({
     prevCard();
   };
 
-  const slideVariants = {
-    enter: (dir: number) => ({
-      x: dir > 0 ? 36 : -36,
-      opacity: 0,
-      scale: 0.985,
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
-      scale: 1,
-    },
-    exit: (dir: number) => ({
-      x: dir > 0 ? -36 : 36,
-      opacity: 0,
-      scale: 0.985,
-    }),
+  const textVariants = {
+    enter: (dir: number) => ({ x: dir > 0 ? 24 : -24, opacity: 0 }),
+    center: { x: 0, opacity: 1 },
+    exit: (dir: number) => ({ x: dir > 0 ? -24 : 24, opacity: 0 }),
   };
 
+  const current = content[activeCard];
+
+  const parseDescription = (rawText: string) => {
+    const parts = rawText
+      .split(/<\/br>|<br\s*\/?>|\n/i)
+      .map((part) => part.trim())
+      .filter(Boolean);
+
+    return {
+      title: parts[0] || '',
+      subtitle: parts[1] || '',
+      description: parts.slice(2).join(' ') || '',
+    };
+  };
+
+  const parsed = current?.description ? parseDescription(current.description) : null;
+
   return (
-    <div className="md:hidden relative h-full w-screen ">
+    <div className="md:hidden relative flex h-full w-full flex-col overflow-hidden">
+      {/* Imagen — altura fija y grande, ancho forzado al 100% */}
+      <div className="relative w-full h-[250px] shrink-0">
+        <ContentDisplay content={content} activeCard={activeCard} />
+      </div>
 
-      {/* Background */}
-      <ContentDisplay content={content} activeCard={activeCard} />
+      {/* Cuadro de texto — debajo de la imagen, ancho completo, botones dentro */}
+      <div className="relative z-20 flex w-full items-start gap-3 bg-white px-5 py-4 rounded-b-[32px]">
+        <button
+          type="button"
+          onClick={handlePrev}
+          disabled={isFirst}
+          aria-label="Anterior"
+          className="mt-1 shrink-0 rounded-full bg-muted-foreground/80 p-2 text-white transition-opacity disabled:opacity-30"
+        >
+          <ChevronLeft size={20} strokeWidth={2} />
+        </button>
 
-      {/* Bottom Glass Section */}
-      <div className="absolute inset-x-0 z-40 flex justify-center px-2">
-
-        <div className="relative w-full max-w-full flex items-end justify-center gap-8">
-
-          {/* Left Arrow */}
-          <AnimatePresence>
-            {!isFirst && (
-              <motion.button
-                initial={{ opacity: 0, x: -12 }}
-                animate={{ opacity: 0.7, x: 0 }}
-                exit={{ opacity: 0, x: -12 }}
-                transition={{ duration: 0.35, ease: easing }}
-                onClick={handlePrev}
-                className="
-                  absolute left-0 bottom-0
-                  h-12 w-12
-                  rounded-full
-                  bg-white/10
-                  backdrop-blur-2xl
-                  border border-white/10
-                  border-l-0
-                  flex items-center justify-center
-                  text-[#f1ba0a] z-50
-                "
-              >
-                <ChevronLeft size={30} strokeWidth={1.5} />
-              </motion.button>
-            )}
+        <div className="relative min-w-0 flex-1 overflow-hidden">
+          <AnimatePresence mode="wait" custom={direction}>
+            <motion.div
+              key={activeCard}
+              custom={direction}
+              variants={textVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.4, ease: easing }}
+              className="flex flex-col items-center text-center"
+            >
+              {parsed?.title && (
+                <span className="text-[15px] font-semibold text-[#001B3D]">
+                  {parsed.title}
+                </span>
+              )}
+              {parsed?.subtitle && (
+                <span className="mt-0.5 text-[12px] text-[#8B6539]">
+                  {parsed.subtitle}
+                </span>
+              )}
+              {parsed?.description && (
+                <p className="mt-1 text-[13px] leading-[1.45] text-[#001B3D]">
+                  {parsed.description}
+                </p>
+              )}
+            </motion.div>
           </AnimatePresence>
-
-          {/* Glass Card */}
-          <div className="relative w-full max-w-[72%]">
-
-            <div className="relative">
-              <AnimatePresence mode="wait" custom={direction}>
-                <motion.div
-                  key={activeCard}
-                  custom={direction}
-                  variants={slideVariants}
-                  initial="enter"
-                  animate="center"
-                  exit="exit"
-                  transition={{
-                    duration: 0.55,
-                    ease: easing,
-                  }}
-                  className="rounded-[20px]"
-                >
-                  <div className="w-full px-6 py-5 bg-white/[0.06] backdrop-blur-2xl border border-white/10 rounded-[20px]">
-                    <h3 className="text-[15px] font-medium text-campana-secondary md:text-white mb-1">
-                      {content[activeCard].title}
-                    </h3>
-
-                    <p className="text-[13px] text-white/70 leading-[1.6]">
-                      {content[activeCard].description}
-                    </p>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-
-          </div>
-
-          {/* Right Arrow */}
-          <AnimatePresence>
-            {!isLast && (
-              <motion.button
-                initial={{ opacity: 0, x: 12 }}
-                animate={{ opacity: 0.7, x: 0 }}
-                exit={{ opacity: 0, x: 12 }}
-                transition={{ duration: 0.35, ease: easing }}
-                onClick={handleNext}
-                className="
-                  absolute right-0 bottom-0
-                  h-12 w-12
-                  rounded-full
-                  bg-white/10
-                  backdrop-blur-2xl
-                  border border-white/10
-                  border-r-0
-                  flex items-center justify-center
-                  text-[#f1ba0a] z-50
-                "
-              >
-                <ChevronRight size={30} strokeWidth={1.5} />
-              </motion.button>
-            )}
-          </AnimatePresence>
-
         </div>
+
+        <button
+          type="button"
+          onClick={handleNext}
+          disabled={isLast}
+          aria-label="Siguiente"
+          className="mt-1 shrink-0 rounded-full bg-muted-foreground/80 p-2 text-white transition-opacity disabled:opacity-30"
+        >
+          <ChevronRight size={20} strokeWidth={2} />
+        </button>
       </div>
     </div>
   );
@@ -429,7 +396,7 @@ const ContentDisplay = ({
   const parsed = current.description ? parseDescription(current.description) : null;
 
   return (
-    <div className="relative z-10 flex min-h-0 flex-1 flex-col overflow-hidden rounded-3xl bg-white md:-ml-10">
+    <div className="relative z-10 flex min-h-0 flex-1 flex-col overflow-hidden rounded-t-[32px] md:rounded-3xl bg-white md:-ml-10">
       {/* Contenido principal o Imagen */}
       {current.renderContent ? (
         <div className="relative w-full h-[250px] md:h-full flex items-center justify-center flex-1">
@@ -445,9 +412,9 @@ const ContentDisplay = ({
         </div>
       )}
 
-      {/* Sección inferior blanca con los textos seccionados */}
+      {/* Sección inferior blanca con los textos seccionados (solo desktop) */}
       {showDescription && !current.renderContent && parsed && (
-        <div className="bg-white px-8 py-8 md:px-12 md:py-6 text-center flex flex-col items-center justify-center rounded-b-3xl">
+        <div className="hidden md:flex bg-white px-8 py-8 md:px-12 md:py-6 text-center flex-col items-center justify-center rounded-b-3xl">
           {parsed.title && (
             <h3 className="text-xl md:text-[34px] font-normal tracking-wide text-[#001B3D] uppercase mb-2">
               {parsed.title}

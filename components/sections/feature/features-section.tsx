@@ -78,7 +78,7 @@ export default function FeaturesSection({
             if (descriptionRef.current) {
                 ScrollTrigger.create({
                     trigger: isMobile ? sectionRef.current : descriptionRef.current,
-                    start: isMobile ? "top top" : "top 12%",
+                    start: isMobile ? "top 8%" : "top 12%",
                     end: () => `+=${window.innerHeight}`,
                     pin: sectionRef.current,
                     pinSpacing: true,
@@ -123,7 +123,7 @@ export default function FeaturesSection({
                                                 initial={{ opacity: 0, y: 20 }}
                                                 animate={isVisible ? { opacity: 1, y: 0 } : {}}
                                                 transition={{ delay: 0.1, duration: 0.5 }}
-                                                className="text-3xl font-normal tracking-tight text-foreground lg:text-6xl font-jakarta"
+                                                className="text-2xl font-normal tracking-tight text-foreground lg:text-6xl font-jakarta"
                                             >
                                                 {title}
                                             </motion.h3>
@@ -135,7 +135,7 @@ export default function FeaturesSection({
                                                 initial={{ opacity: 0, y: 20 }}
                                                 animate={isVisible ? { opacity: 1, y: 0 } : {}}
                                                 transition={{ delay: 0.2, duration: 0.5 }}
-                                                className="text-sm font-medium uppercase font-jakarta max-w-5xl mx-auto text-center"
+                                                className="text-xs font-medium uppercase font-jakarta max-w-5xl mx-auto text-center"
                                             >
                                                 {description}
                                             </motion.div>

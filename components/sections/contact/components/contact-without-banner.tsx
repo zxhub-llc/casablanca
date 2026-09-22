@@ -63,7 +63,7 @@ export default function ContactWithoutBanner({
 
     return (
         <div className="flex flex-col lg:flex-row justify-between gap-4 lg:gap-12 h-full min-h-screen items-start">
-            <div className="flex flex-col justify-center items-center md:items-start gap-4 w-full max-w-5xl px-2 sm:px-8 py-2 lg:py-24">
+            <div className="flex flex-col justify-center items-center md:items-start gap-4 w-full max-w-5xl px-2 py-2 md:py-24">
                 {highlight && (
                     <motion.div
                         initial={{ opacity: 0, y: 10 }}
@@ -87,7 +87,7 @@ export default function ContactWithoutBanner({
                             duration: 0.8,
                             ease: [0.22, 1, 0.36, 1],
                         }}
-                        className="text-white text-4xl sm:text-5xl lg:text-7xl font-jakarta"
+                        className="text-white text-2xl font-semibold md:font-medium md:text-7xl font-jakarta"
                     >
                         <>
                             <div className="hidden md:block">
@@ -114,18 +114,18 @@ export default function ContactWithoutBanner({
                             duration: 0.8,
                             ease: [0.22, 1, 0.36, 1],
                         }}
-                        className="w-full max-w-4xl px-3 py-2">
-                        <p className="text-base sm:text-lg lg:text-lg leading-relaxed text-white text-center sm:text-start">
+                        className="w-full max-w-4xl px-2 py-2">
+                        <p className="text-sm md:text-lg leading-relaxed text-white text-center sm:text-start">
                             {description}
                         </p>
                     </motion.div>
                 )}
                 {(buttonText || secondaryButtonText) && (
-                    <div className="flex flex-wrap items-center gap-4 w-full max-w-4xl pt-2">
+                    <div className="flex flex-col md:flex-row items-center gap-4 w-full max-w-4xl pt-2">
                         {buttonText && buttonUrl && (
                             <Button
                                 asChild
-                                className="rounded-full h-12 px-4 bg-white text-foreground hover:bg-white hover:text-foreground relative group"
+                                className="rounded-full w-full md:w-auto h-12 px-4 bg-white text-foreground hover:bg-white hover:text-foreground relative group"
                             >
                                 <Link href={buttonUrl}>
                                     <span className="relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-current after:transition-all after:duration-300 hover:after:w-full">
@@ -137,7 +137,7 @@ export default function ContactWithoutBanner({
                         {secondaryButtonText && secondaryButtonUrl && (
                             <Button
                                 asChild
-                                className="rounded-full h-12 px-4 hover:bg-primary hover:text-primary-foreground group"
+                                className="rounded-full w-full md:w-auto h-12 px-4 hover:bg-primary hover:text-primary-foreground group"
                             >
                                 <Link href={secondaryButtonUrl}>
                                     <span className="relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-current after:transition-all after:duration-300 hover:after:w-full">
@@ -243,8 +243,8 @@ export default function ContactWithoutBanner({
                     )}
                 </div>
             </div>
-            <div className="w-full lg:w-1/3 lg:flex lg:items-start lg:self-stretch mt-20 sm:py-0">
-                <div className="relative shadow-input w-full rounded-2xl bg-white p-8 dark:bg-black items-center">
+            <div className="w-full lg:w-1/3 lg:flex lg:items-start lg:self-stretch mt-2 md:mt-20 mb-12 md:mb-0 sm:py-0">
+                <div className="relative shadow-input w-full rounded-2xl bg-white/10 backdrop-blur-2xl p-4 md:p-8 items-center">
                     <div className="pointer-events-none absolute inset-0 opacity-[0.07]">
                         <div
                             className="absolute inset-0"

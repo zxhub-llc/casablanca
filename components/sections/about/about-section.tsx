@@ -120,7 +120,7 @@ function PinnedVideoAbout({ about }: { about: ZXAboutBlock }) {
                 scrollTrigger: {
                     trigger: sectionRef.current,
                     start: "top top",
-                    end: () => `+=${window.innerHeight * 5}`,
+                    end: () => `+=${window.innerHeight * 2}`,
                     scrub: true,
                     pin: true,
                     pinSpacing: true,
@@ -256,7 +256,7 @@ function PinnedVideoAbout({ about }: { about: ZXAboutBlock }) {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.3, duration: 0.5 }}
-                            className="prose prose-lg dark:prose-invert mt-6 hidden max-w-4xl text-lg leading-tight tracking-tight text-foreground lg:block font-jakarta"
+                            className="prose prose-lg dark:prose-invert mt-6 max-w-4xl text-md md:text-lg leading-tight tracking-tight text-foreground font-jakarta"
                             dangerouslySetInnerHTML={{ __html: about.content }}
                         />
                     )}

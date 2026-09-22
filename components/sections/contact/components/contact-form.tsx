@@ -96,6 +96,7 @@ export function ContactForm({
                                             onChange={(e) => updateValue(field.name, e.target.value)}
                                             placeholder={field.placeholder}
                                             required={field.required}
+                                            className="bg-white dark:bg-gray-700/40 rounded-full"
                                         />
                                     )}
 
@@ -106,6 +107,7 @@ export function ContactForm({
                                             onChange={(e) => updateValue(field.name, e.target.value)}
                                             placeholder={field.placeholder}
                                             required={field.required}
+                                            className="bg-white dark:bg-gray-700/40"
                                         />
                                     )}
 

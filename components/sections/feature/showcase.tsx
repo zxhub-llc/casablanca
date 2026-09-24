@@ -34,7 +34,7 @@ export const Showcase = ({ content }: ShowcaseProps) => {
     setActiveCard((prev) => Math.max(0, prev - 1));
 
   return (
-    <div className="relative w-full items-center justify-center max-w-8xl mx-auto h-auto md:h-[700px] rounded-none md:rounded-[32px] bg-transparent md:bg-muted-foreground/20 ">
+    <div className="relative w-full items-center justify-center max-w-8xl mx-auto h-auto md:h-[700px] rounded-none md:rounded-[32px] bg-transparent md:bg-[#f0eae1] ">
       <DesktopUI
         content={content}
         activeCard={activeCard}
@@ -155,7 +155,7 @@ export const DesktopUI = ({
   };
 
   return (
-    <div className="hidden md:flex h-full pl-12 gap-0">
+    <div className="hidden md:flex h-full pl-12 gap-0 ">
       {/* Sidebar */}
       <div className="relative z-20 xl:w-[30%] flex flex-col justify-center gap-2 left-0 ">
 
@@ -172,7 +172,7 @@ export const DesktopUI = ({
               }}
               className={cn(
                 "relative shrink-0 overflow-hidden rounded-[28px] left-4",
-                "bg-muted-foreground/40 text-white",
+                "bg-[#D5CBC1] text-white",
                 "cursor-pointer"
               )}
               onClick={() => toggleItem(index)}
@@ -221,7 +221,7 @@ export const DesktopUI = ({
                 toggleItem(Math.max(0, activeIndex - 1));
               }
             }}
-            className="p-2 bg-muted-foreground/40 rounded-full text-neutral-500 hover:text-[#f1ba0a] transition-colors"
+            className="p-2 bg-[#D5CBC1] rounded-full text-neutral-500 hover:text-[#f1ba0a] transition-colors"
           >
             <ChevronUp size={20} />
           </button>
@@ -234,7 +234,7 @@ export const DesktopUI = ({
                 toggleItem(Math.min(content.length - 1, activeIndex + 1));
               }
             }}
-            className="p-2 bg-muted-foreground/40 rounded-full text-neutral-500 hover:text-[#f1ba0a] transition-colors"
+            className="p-2 bg-[#D5CBC1] rounded-full text-neutral-500 hover:text-[#f1ba0a] transition-colors"
           >
             <ChevronDown size={20} />
           </button>
@@ -396,17 +396,17 @@ const ContentDisplay = ({
   const parsed = current.description ? parseDescription(current.description) : null;
 
   return (
-    <div className="relative z-10 flex min-h-0 flex-1 flex-col overflow-hidden rounded-t-[32px] md:rounded-3xl bg-white md:-ml-10">
+    <div className="relative z-10 flex min-h-0 flex-1 flex-col overflow-hidden rounded-t-[32px] md:rounded-3xl bg-white md:-ml-10 w-full h-full">
       {/* Contenido principal o Imagen */}
       {current.renderContent ? (
         <div className="relative w-full h-[250px] md:h-full flex items-center justify-center flex-1">
           {current.renderContent}
         </div>
       ) : (
-        <div className="relative w-full flex-1 overflow-hidden bg-accent min-h-[250px]">
+        <div className="relative w-full h-[250px] md:h-full flex-1 overflow-hidden bg-accent">
           <img
             src={current.image}
-            className="w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover"
             alt={current.title || 'Showcase image'}
           />
         </div>
@@ -421,7 +421,7 @@ const ContentDisplay = ({
             </h3>
           )}
           {parsed.subtitle && (
-            <p className="text-sm md:text-base text-[#8B6539] mb-4 font-jakarta">
+            <p className="text-sm md:text-base text-[#8B6539] md:mb-4 font-jakarta">
               {parsed.subtitle}
             </p>
           )}

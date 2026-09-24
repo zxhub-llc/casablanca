@@ -44,7 +44,7 @@ export default function AboutSection({
             {showBanner && (
                 <Banner image={heroImage} mobile={heroMobile} title={about.title} />
             )}
-            <section id={id ?? "about"} className="relative flex min-h-screen w-full items-center overflow-hidden bg-background">
+            <section id={id ?? "about"} className="relative flex min-h-screen w-full items-center overflow-hidden bg-secondary">
                 {hasVideo ? (
                     <PinnedVideoAbout about={about} />
                 ) : features.length > 0 ? (

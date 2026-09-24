@@ -10,12 +10,14 @@ import { ZXGalleryItem } from "@/lib/graphql";
 gsap.registerPlugin(ScrollTrigger);
 
 interface GallerySectionProps {
+    id: string;
     items: ZXGalleryItem[];
     highlight?: string;
     title?: string;
 }
 
 export default function GallerySection({
+    id,
     items,
     highlight,
     title,

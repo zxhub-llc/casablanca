@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 gsap.registerPlugin(ScrollTrigger);
 
 interface CaseStudiesSectionProps {
+    id: string;
     items: ZXCaseStudy[];
     highlight?: string;
     title?: string;
@@ -23,8 +24,8 @@ interface Photo {
     alt: string;
 }
 
-const PER_SLIDE_DESKTOP = 5; // 1 grande + 4 pequeñas
-const PER_SLIDE_MOBILE = 3; // 1 grande + 2 pequeñas
+const PER_SLIDE_DESKTOP = 5;
+const PER_SLIDE_MOBILE = 3;
 
 const chunk = <T,>(arr: T[], size: number): T[][] =>
     Array.from({ length: Math.ceil(arr.length / size) }, (_, i) =>
@@ -32,6 +33,7 @@ const chunk = <T,>(arr: T[], size: number): T[][] =>
     );
 
 export default function CaseStudiesSection({
+    id,
     items,
     highlight,
     title,

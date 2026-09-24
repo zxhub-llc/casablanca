@@ -6,14 +6,24 @@ import PageRenderer from "@/components/page/page-renderer";
 
 export const revalidate = 3600;
 
-async function getLang(): Promise<string> {
-  const headersList = await headers();
-  return headersList.get("x-lang") ?? "es";
+// Mapeo de slug por idioma (igual que en la versión anterior)
+const slugByLang: Record<string, string> = {
+  en: "home",
+  es: "inicio",
+};
+
+function getSlugForLang(lang: string): string {
+  return slugByLang[lang] ?? slugByLang.es;
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
   const { lang } = await params;
-  const page = await getZxPageBySlug("inicio", lang);
+  const slug = getSlugForLang(lang);
+  const page = await getZxPageBySlug(slug, lang);
 
   if (!page?.seo) return {};
 
@@ -26,9 +36,14 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   };
 }
 
-export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}) {
   const { lang } = await params;
-  const page = await getZxPageBySlug("inicio", lang);
+  const slug = getSlugForLang(lang);
+  const page = await getZxPageBySlug(slug, lang);
 
   if (!page) notFound();
 

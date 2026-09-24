@@ -9,10 +9,12 @@ import { cn } from "@/lib/utils";
 import { subscribeNewsletter } from "@/app/api/send/newsletter";
 
 interface NewsletterSectionProps {
+    id: string;
     newsletter?: ZXNewsletter | null;
 }
 
 export default function NewsletterSection({
+    id,
     newsletter,
 }: NewsletterSectionProps) {
     const [email, setEmail] = useState("");

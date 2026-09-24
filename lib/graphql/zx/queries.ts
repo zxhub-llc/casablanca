@@ -94,6 +94,7 @@ query GetMenu($slug: String, $lang: String) {
       objectId
       objectType
       lang
+      anchorTarget
       meta {
         taxonomy
         slug
@@ -111,6 +112,7 @@ query GetMenu($slug: String, $lang: String) {
         order
         icon
         isOverview
+        anchorTarget
       }
     }
   }
@@ -164,6 +166,7 @@ query GetZxPage($slug: String, $lang: String) {
     }
 
     sections {
+      id
       layout
       rawJson
     }
@@ -248,8 +251,8 @@ query GetTeam($lang: String) {
 `;
 
 export const GET_SLIDER = `
-query GetSlider($id: Int!) {
-  zxSlider(id: $id) {
+query GetSlider($id: Int!, $lang: String) {
+  zxSlider(id: $id, lang: $lang) {
     id
     title
     autoplay
@@ -277,8 +280,8 @@ query GetSlider($id: Int!) {
 `;
 
 export const GET_HERO = `
-query GetHero($id: Int, $slug: String) {
-  zxHero(id: $id, slug: $slug) {
+query GetHero($id: Int, $slug: String, $lang: String) {
+  zxHero(id: $id, slug: $slug, lang: $lang) {
     id
     title
     slug

@@ -16,6 +16,7 @@ if (typeof window !== "undefined") {
 }
 
 interface FeaturesSectionProps {
+    id: string;
     features?: ZXFeature[];
     title?: string;
     description?: string;
@@ -25,6 +26,7 @@ interface FeaturesSectionProps {
 }
 
 export default function FeaturesSection({
+    id,
     features = [],
     title,
     description,

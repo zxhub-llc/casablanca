@@ -50,9 +50,6 @@ export default async function PageRenderer({
     const parsed =
         parseSections(sections);
 
-    // console.log("=== [DEBUG WP SECTIONS RAW] ===", JSON.stringify(sections, null, 2));
-    // console.log("=== [DEBUG PARSED SECTIONS] ===", JSON.stringify(parsed, null, 2));
-
     // ── FILTER SECTIONS ───────────────────────────
 
     const heroSections =
@@ -124,7 +121,8 @@ export default async function PageRenderer({
                     }
 
                     return getHeroById(
-                        heroId
+                        heroId,
+                        lang
                     );
                 }
             )
@@ -172,6 +170,7 @@ export default async function PageRenderer({
 
         getSocial(),
     ]);
+
     // ── MAPS ──────────────────────────────────────
 
     const heroesMap = new Map(
@@ -192,8 +191,6 @@ export default async function PageRenderer({
                     switch (
                     section.layout
                     ) {
-                        // ── HERO ─────────────────────
-
                         case "hero": {
                             if (!isHeroSection(section)) {
                                 return null;
@@ -213,6 +210,7 @@ export default async function PageRenderer({
 
                             return (
                                 <HeroSection
+                                    id={section.id}
                                     key={i}
                                     hero={hero}
                                 />
@@ -240,6 +238,7 @@ export default async function PageRenderer({
 
                             return (
                                 <AboutSection
+                                    id={section.id}
                                     key={i}
                                     abouts={filtered}
                                     highlight={section.data.highlight}
@@ -267,6 +266,7 @@ export default async function PageRenderer({
 
                             return (
                                 <FeaturesSection
+                                    id={section.id}
                                     key={i}
                                     features={filtered}
                                     title={section.data.title}
@@ -295,6 +295,7 @@ export default async function PageRenderer({
 
                             return (
                                 <ServicesSection
+                                    id={section.id}
                                     key={i}
                                     services={filtered}
                                     title={section.data.title}
@@ -307,71 +308,6 @@ export default async function PageRenderer({
                             );
                         }
 
-                        // ── TEAM ────────────────────
-
-                        // case "team": {
-                        //     const ids =
-                        //         section.data
-                        //             .team ??
-                        //         [];
-
-                        //     const filtered =
-                        //         ids.length
-                        //             ? team.filter(
-                        //                   (
-                        //                       m
-                        //                   ) =>
-                        //                       ids.includes(
-                        //                           Number(
-                        //                               m.id
-                        //                           )
-                        //                       )
-                        //               )
-                        //             : team;
-
-                        //     return (
-                        //         <TeamSection
-                        //             key={i}
-                        //             members={
-                        //                 filtered
-                        //             }
-                        //         />
-                        //     );
-                        // }
-
-                        // ── TESTIMONIALS ────────────
-
-                        // case "testimonials": {
-                        //     const ids =
-                        //         section.data
-                        //             .testimonials ??
-                        //         [];
-
-                        //     const filtered =
-                        //         ids.length
-                        //             ? testimonials.filter(
-                        //                   (
-                        //                       t
-                        //                   ) =>
-                        //                       ids.includes(
-                        //                           Number(
-                        //                               t.id
-                        //                           )
-                        //                       )
-                        //               )
-                        //             : testimonials;
-
-                        //     return (
-                        //         <TestimonialsSection
-                        //             key={i}
-                        //             testimonials={
-                        //                 filtered
-                        //             }
-                        //         />
-                        //     );
-                        // }
-
-                        // ── FAQ ─────────────────────
                         case "faq": {
                             if (!isFaqSection(section)) {
                                 return null;
@@ -389,6 +325,7 @@ export default async function PageRenderer({
 
                             return (
                                 <FaqSection
+                                    id={section.id}
                                     key={i}
                                     faqs={filtered}
                                     title={section.data.title}
@@ -418,13 +355,12 @@ export default async function PageRenderer({
 
                             return (
                                 <NewsletterSection
+                                    id={section.id}
                                     key={i}
                                     newsletter={filtered[0]}
                                 />
                             );
                         }
-
-                        // ── GALLERY ─────────────────
 
                         case "gallery": {
                             if (!isGallerySection(section)) {
@@ -440,6 +376,7 @@ export default async function PageRenderer({
 
                             return (
                                 <GallerySection
+                                    id={section.id}
                                     key={i}
                                     items={filtered}
                                     highlight={section.data.highlight}
@@ -448,7 +385,6 @@ export default async function PageRenderer({
                             );
                         }
 
-                        // ── CASE STUDIES ─────────────────
                         case "case_studies": {
                             if (!isCaseStudiesSection(section)) return null;
 
@@ -460,6 +396,7 @@ export default async function PageRenderer({
 
                             return (
                                 <CaseStudiesSection
+                                    id={section.id}
                                     key={i}
                                     items={filtered}
                                     highlight={section.data.highlight}
@@ -473,6 +410,7 @@ export default async function PageRenderer({
 
                             return (
                                 <CtaBannerSection
+                                    id={section.id}
                                     key={i}
                                     title={section.data.title}
                                     description={section.data.description}
@@ -484,8 +422,6 @@ export default async function PageRenderer({
                                 />
                             );
                         }
-
-                        // ── CONTACT ─────────────────
 
                         case "contact": {
 
@@ -515,6 +451,7 @@ export default async function PageRenderer({
 
                             return (
                                 <ContactSection
+                                    id={section.id}
                                     key={i}
                                     contact={form}
                                     highlight={section.data.highlight}

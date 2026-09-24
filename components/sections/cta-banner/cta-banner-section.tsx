@@ -12,6 +12,7 @@ import { motion } from "motion/react";
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 interface CtaBannerSectionProps {
+    id: string;
     title?: string;
     description?: string;
     highlight?: string;
@@ -22,6 +23,7 @@ interface CtaBannerSectionProps {
 }
 
 export default function CtaBannerSection({
+    id,
     title,
     description,
     highlight,

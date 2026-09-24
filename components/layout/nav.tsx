@@ -7,7 +7,8 @@ import { motion } from "motion/react";
 import { MobileNav } from "@/components/nav/header/mobileNav";
 import { cn } from "@/lib/utils";
 import { MenuRenderer } from "../nav/header/menuRenderer";
-import { ZXCTA, ZXMenu, ZXSite } from "@/lib/graphql";
+import { ZXCTA, ZXLanguage, ZXMenu, ZXSite } from "@/lib/graphql";
+import { LanguageSelector } from "../nav/header/language-selector";
 
 interface NavProps {
   menu?: ZXMenu | null;
@@ -17,10 +18,12 @@ interface NavProps {
   className?: string;
   children?: React.ReactNode;
   id?: string;
+  languages: ZXLanguage[]
 }
 
-export function Nav({ menu, site, cta, className, children, id }: NavProps) {
+export function Nav({ menu, site, cta, className, children, id, languages }: NavProps) {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isAtTop, setIsAtTop] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
@@ -65,7 +68,7 @@ export function Nav({ menu, site, cta, className, children, id }: NavProps) {
               priority
             />
           ) : (
-            <span className="font-serif text-lg tracking-[0.35em] uppercase">
+            <span className="font-serif text-xs uppercase">
               {site?.title ?? "Casa Blanca"}
             </span>
           )}
@@ -80,12 +83,18 @@ export function Nav({ menu, site, cta, className, children, id }: NavProps) {
 
         {/* CTA + MÓVIL */}
         <div className="flex items-center gap-3">
+          <div className={cn(
+            "items-center gap-0 md:gap-3 flex z-50 transition-opacity duration-300",
+            isAtTop ? "opacity-100" : "opacity-0"
+          )}>
+            <LanguageSelector languages={languages} />
+          </div>
           {cta?.enabled && cta.title && cta.url && (
             <Link
               href={cta.url}
               target={cta.newTab ? "_blank" : undefined}
               rel={cta.newTab ? "noopener noreferrer" : undefined}
-              className="hidden rounded-full bg-[#FF385C] px-7 py-3 text-xs font-medium uppercase tracking-[0.2em] text-white transition hover:bg-[#e0294b] md:inline-flex"
+              className="hidden rounded-full bg-[#FF385C] px-2 lg:px-7 py-3 md:text-xs font-medium uppercase text-nowrap text-white transition hover:bg-[#e0294b] md:inline-flex"
             >
               {cta.title}
             </Link>

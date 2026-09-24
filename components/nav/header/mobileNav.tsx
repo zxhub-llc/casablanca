@@ -21,6 +21,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { ChevronDown, ChevronRight, Facebook02Icon, InstagramIcon, Menu02Icon, NewTwitterIcon, TiktokIcon, WhatsappBusinessIcon } from "@hugeicons/core-free-icons";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { motion } from "motion/react";
+import { AnchorAwareLink } from "../anchor-aware-link";
 
 interface MobileNavProps {
   menu?: ZXMenu | null;
@@ -219,8 +220,9 @@ function MobileNavLink({
     }
 
     return (
-      <Link
+      <AnchorAwareLink
         href={item.url}
+        anchorTarget={item.anchorTarget}
         onClick={onClose}
         className={cn(
           "flex items-center gap-2 px-2 justify-between uppercase transition-colors",
@@ -231,14 +233,10 @@ function MobileNavLink({
         )}
       >
         {item.title}
-
         {item.isOverview && (
-          <HugeiconsIcon
-            icon={ChevronRight}
-            className="h-4 w-4"
-          />
+          <HugeiconsIcon icon={ChevronRight} className="h-4 w-4" />
         )}
-      </Link>
+      </AnchorAwareLink>
     );
   }
 
@@ -257,12 +255,9 @@ function MobileNavLink({
           {isPlaceholder ? (
             <span>{item.title}</span>
           ) : (
-            <Link
-              href={item.url}
-              onClick={onClose}
-            >
+            <AnchorAwareLink href={item.url} anchorTarget={item.anchorTarget} onClick={onClose}>
               {item.title}
-            </Link>
+            </AnchorAwareLink>
           )}
 
           {item.isOverview && (

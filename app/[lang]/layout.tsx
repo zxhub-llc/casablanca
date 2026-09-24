@@ -24,7 +24,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 
 const fontJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-jakarta", // o --font-plus-jakarta si prefieres
+  variable: "--font-jakarta",
 });
 
 export async function generateMetadata({
@@ -94,7 +94,7 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <SpeedInsights />
-          <Nav menu={headerMenu} site={site} cta={cta} />
+          <Nav menu={headerMenu} site={site} cta={cta} languages={site?.languages ?? []} />
           {children}
           <Footer footerMenu={footerMenu} site={site} />
         </ThemeProvider>

@@ -68,6 +68,7 @@ export interface ZXMenuItem {
     isOverview?: boolean;
     children?: ZXMenuItem[];
     meta?: ZXMenuMeta;
+    anchorTarget?: string | null;
 }
 
 export interface ZXCTA {
@@ -129,10 +130,11 @@ export interface ZXSeo {
     structuredData?: string;
 }
 
-export interface ZXPageSection {
+export type ZXPageSection = {
+    id: string;
     layout: string;
     rawJson: string;
-}
+};
 
 export interface ZXPage {
     id: string;

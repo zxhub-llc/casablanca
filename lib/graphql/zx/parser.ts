@@ -2,6 +2,7 @@ import type { ZXPageSection } from "./types";
 
 export type ZXSectionParsed =
     | {
+        id: string;
         layout: "hero";
         data: {
             hero?: number;
@@ -12,6 +13,7 @@ export type ZXSectionParsed =
     }
 
     | {
+        id: string;
         layout: "slider";
         data: {
             slider?: number;
@@ -19,6 +21,7 @@ export type ZXSectionParsed =
     }
 
     | {
+        id: string;
         layout: "gallery";
         data: {
             gallery?: number[];
@@ -31,6 +34,7 @@ export type ZXSectionParsed =
     }
 
     | {
+        id: string;
         layout: "services";
         data: {
             services?: number[];
@@ -44,6 +48,7 @@ export type ZXSectionParsed =
     }
 
     | {
+        id: string;
         layout: "features";
         data: {
             features?: number[];
@@ -57,6 +62,7 @@ export type ZXSectionParsed =
     }
 
     | {
+        id: string;
         layout: "team";
         data: {
             team?: number[];
@@ -67,6 +73,7 @@ export type ZXSectionParsed =
     }
 
     | {
+        id: string;
         layout: "testimonials";
         data: {
             testimonials?: number[];
@@ -78,6 +85,7 @@ export type ZXSectionParsed =
     }
 
     | {
+        id: string;
         layout: "faq";
         data: {
             faqs?: number[];
@@ -90,6 +98,7 @@ export type ZXSectionParsed =
         };
     }
     | {
+        id: string;
         layout: "contact";
         data: {
             formId?: string;
@@ -111,6 +120,7 @@ export type ZXSectionParsed =
     }
 
     | {
+        id: string;
         layout: "documentation";
         data: {
             title?: string;
@@ -121,6 +131,7 @@ export type ZXSectionParsed =
     }
 
     | {
+        id: string;
         layout: "stats";
         data: {
             title?: string;
@@ -131,6 +142,7 @@ export type ZXSectionParsed =
     }
 
     | {
+        id: string;
         layout: "about";
         data: {
             highlight?: string;
@@ -142,6 +154,7 @@ export type ZXSectionParsed =
     }
 
     | {
+        id: string;
         layout: "timeline";
         data: {
             title?: string;
@@ -152,6 +165,7 @@ export type ZXSectionParsed =
     }
 
     | {
+        id: string;
         layout: "industries";
         data: {
             title?: string;
@@ -162,18 +176,20 @@ export type ZXSectionParsed =
     }
 
     | {
+        id: string;
         layout: "case_studies";
         data: {
             caseStudies?: number[];
             title?: string;
             subtitle?: string;
-            highlight?: string;   // 👈 nuevo
+            highlight?: string;
             featured?: boolean;
             showBanner?: boolean;
         };
     }
 
     | {
+        id: string;
         layout: "pricing";
         data: {
             title?: string;
@@ -184,6 +200,7 @@ export type ZXSectionParsed =
     }
 
     | {
+        id: string;
         layout: "certifications";
         data: {
             title?: string;
@@ -194,6 +211,7 @@ export type ZXSectionParsed =
     }
 
     | {
+        id: string;
         layout: "newsletter";
         data: {
             newsletters?: number[];
@@ -201,6 +219,7 @@ export type ZXSectionParsed =
     }
 
     | {
+        id: string;
         layout: "cta_banner";
         data: {
             title?: string;
@@ -215,6 +234,7 @@ export type ZXSectionParsed =
     }
 
     | {
+        id: string;
         layout: string;
         data: Record<string, unknown>;
     };
@@ -236,6 +256,7 @@ export function parseSections(
                 switch (section.layout) {
                     case "about":
                         return {
+                            id: section.id,
                             layout: "about",
                             data: {
                                 highlight: raw.highlight,
@@ -247,6 +268,7 @@ export function parseSections(
                         };
                     case "services":
                         return {
+                            id: section.id,
                             layout: "services",
                             data: {
                                 services: raw.services ?? [],
@@ -261,6 +283,7 @@ export function parseSections(
 
                     case "features":
                         return {
+                            id: section.id,
                             layout: "features",
                             data: {
                                 features: raw.features ?? [],
@@ -275,6 +298,7 @@ export function parseSections(
 
                     case "faq":
                         return {
+                            id: section.id,
                             layout: "faq",
                             data: {
                                 faqs: raw.faq ?? [],
@@ -289,6 +313,7 @@ export function parseSections(
 
                     case "newsletter":
                         return {
+                            id: section.id,
                             layout: "newsletter",
                             data: {
                                 newsletters: raw.newsletters ?? [],
@@ -297,6 +322,7 @@ export function parseSections(
 
                     case "gallery":
                         return {
+                            id: section.id,
                             layout: "gallery",
                             data: {
                                 gallery: raw.gallery ?? [],
@@ -310,6 +336,7 @@ export function parseSections(
 
                     case "case_studies":
                         return {
+                            id: section.id,
                             layout: "case_studies",
                             data: {
                                 caseStudies: raw.case_studies ?? [],
@@ -323,6 +350,7 @@ export function parseSections(
 
                     case "cta_banner":
                         return {
+                            id: section.id,
                             layout: "cta_banner" as const,
                             data: {
                                 title: raw.title,
@@ -338,6 +366,7 @@ export function parseSections(
 
                     case "contact":
                         return {
+                            id: section.id,
                             layout: "contact",
                             data: {
                                 title: raw.title,
@@ -360,6 +389,7 @@ export function parseSections(
 
                     default:
                         return {
+                            id: section.id,
                             layout: section.layout,
                             data: raw,
                         };

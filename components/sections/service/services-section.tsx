@@ -13,6 +13,7 @@ import { PalmShadowOverlay } from "@/components/palm-shadow-overlay";
 gsap.registerPlugin(ScrollTrigger);
 
 interface ServicesSectionProps {
+    id: string;
     services?: ZXService[];
     title?: string;
     description?: string;
@@ -29,6 +30,7 @@ interface CardItem {
 }
 
 export default function ServicesSection({
+    id,
     services = [],
     title,
     description,

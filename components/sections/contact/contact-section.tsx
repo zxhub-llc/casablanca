@@ -8,6 +8,7 @@ import { Banner } from "../components/banner";
 import Image from "next/image";
 
 interface ContactSectionProps {
+    id: string;
     contact?: ZXContactForm | null;
     social?: ZXSocial | null;
     title?: string;
@@ -28,6 +29,7 @@ interface ContactSectionProps {
 }
 
 export default function ContactSection({
+    id,
     contact,
     social,
     title,

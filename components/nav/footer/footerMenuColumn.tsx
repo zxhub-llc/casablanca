@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ZXMenuItem } from "@/lib/graphql";
 import { cn } from "@/lib/utils";
 import { FooterMenuLink } from "./footerMenuLink";
+import { AnchorAwareLink } from "../anchor-aware-link";
 
 interface FooterMenuColumnProps {
     item: ZXMenuItem;
@@ -30,15 +31,16 @@ export function FooterMenuColumn({ item }: FooterMenuColumnProps) {
                     {item.title}
                 </div>
             ) : (
-                <Link
+                <AnchorAwareLink
                     href={item.url}
+                    anchorTarget={item.anchorTarget}
                     className={cn(
                         "text-sm font-semibold uppercase tracking-wide",
                         "text-foreground transition-colors hover:text-primary"
                     )}
                 >
                     {item.title}
-                </Link>
+                </AnchorAwareLink>
             )}
 
             {/* CHILDREN */}

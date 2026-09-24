@@ -4,10 +4,11 @@ import { HeroSlider } from "./carousel/hero-slider";
 import { HeroStatic } from "./static/hero-static";
 
 interface HeroSectionProps {
+  id: string;
   hero: ZXHero;
 }
 
-export function HeroSection({ hero }: HeroSectionProps) {
+export function HeroSection({ hero, id }: HeroSectionProps) {
   if (hero.type === "slider" && hero.slider) {
     return <HeroSlider slider={hero.slider} />;
   }

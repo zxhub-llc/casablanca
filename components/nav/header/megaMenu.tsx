@@ -7,6 +7,7 @@ import { ZXMenuItem } from "@/lib/graphql";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ChevronDown, ChevronRight } from "@hugeicons/core-free-icons";
 import { useEffect, useState } from "react";
+import { AnchorAwareLink } from "../anchor-aware-link";
 
 interface MegaMenuProps {
     items: ZXMenuItem[];
@@ -14,7 +15,7 @@ interface MegaMenuProps {
 
 export function MegaMenu({ items }: MegaMenuProps) {
     return (
-        <nav className="flex items-center gap-8">
+        <nav className="flex items-center sm:gap-3 md:gap-4 lg:gap-6">
             {items.map((item) => (
                 <MegaMenuItem
                     key={item.id}
@@ -30,11 +31,8 @@ function MegaMenuItem({ item }: { item: ZXMenuItem }) {
     const isExactActive = useActiveRoute(item.url, true);
     const isPlaceholder = item.url === "#" || item.url === "/#" || !item.url;
 
-    // ESTADO: Guarda cuál hijo está activo para pintar su imagen y textos
     const [activeChild, setActiveChild] = useState<ZXMenuItem | null>(null);
 
-    // Efecto para que, cada vez que el menú se monte o cambie, 
-    // por defecto se pre-seleccione el primer hijo disponible
     useEffect(() => {
         if (hasChildren && item.children) {
             setActiveChild(item.children[0]);
@@ -42,7 +40,7 @@ function MegaMenuItem({ item }: { item: ZXMenuItem }) {
     }, [item.children, hasChildren]);
 
     const triggerClasses = cn(
-        "flex items-center gap-1.5 py-5 text-sm font-medium transition-colors relative text-foreground uppercase",
+        "flex items-center gap-1.5 py-5 text-xs font-medium transition-colors relative text-foreground uppercase",
         isExactActive ? "text-primary" : "text-current hover:text-primary group-hover:text-primary"
     );
 
@@ -73,9 +71,13 @@ function MegaMenuItem({ item }: { item: ZXMenuItem }) {
                         {renderTriggerContent()}
                     </button>
                 ) : (
-                    <Link href={item.url} className={triggerClasses}>
+                    <AnchorAwareLink
+                        href={item.url}
+                        anchorTarget={item.anchorTarget}
+                        className={triggerClasses}
+                    >
                         {renderTriggerContent()}
-                    </Link>
+                    </AnchorAwareLink>
                 )}
             </div>
 
@@ -110,7 +112,6 @@ function MegaMenuItem({ item }: { item: ZXMenuItem }) {
     );
 }
 
-// Interfaz extendida para que el hijo sepa comunicarse con el padre
 interface MegaMenuChildProps {
     item: ZXMenuItem;
     onHover: () => void;
@@ -123,13 +124,12 @@ function MegaMenuChild({ item, onHover, isSelected }: MegaMenuChildProps) {
     const isPlaceholder = item.url === "#" || item.url === "/#" || !item.url;
 
     const childClasses = cn(
-        "flex items-center gap-1 text-lg uppercase font-bold mb-2 transition-colors cursor-pointer",
-        // Si la ruta es la actual, o si tenemos el mouse encima (isSelected), se ilumina en blanco
+        "flex items-center gap-1 md:text-sm lg:text-md xl:text-lg uppercase font-bold mb-2 transition-colors cursor-pointer",
         isActive || isSelected ? "text-white" : "text-black/40 hover:text-white"
     );
 
     return (
-        <div className="w-full" onMouseEnter={onHover}> {/* ◄ Captura el movimiento del mouse */}
+        <div className="w-full" onMouseEnter={onHover}>
             {isPlaceholder ? (
                 <div className={childClasses}>
                     {item.title}
@@ -138,12 +138,16 @@ function MegaMenuChild({ item, onHover, isSelected }: MegaMenuChildProps) {
                     )}
                 </div>
             ) : (
-                <Link href={item.url} className={childClasses}>
+                <AnchorAwareLink
+                    href={item.url}
+                    anchorTarget={item.anchorTarget}
+                    className={childClasses}
+                >
                     {item.title}
                     {item.isOverview && (
                         <HugeiconsIcon icon={ChevronRight} className="h-3.5 w-3.5" />
                     )}
-                </Link>
+                </AnchorAwareLink>
             )}
 
             {hasChildren && (
@@ -151,16 +155,17 @@ function MegaMenuChild({ item, onHover, isSelected }: MegaMenuChildProps) {
                     {item.children!.map((sub) => {
                         const isSubActive = useActiveRoute(sub.url, true);
                         return (
-                            <Link
+                            <AnchorAwareLink
                                 key={sub.id}
                                 href={sub.url}
+                                anchorTarget={sub.anchorTarget}
                                 className={cn(
                                     "text-sm transition-colors uppercase font-medium",
                                     isSubActive ? "text-white" : "text-black/60 hover:text-white"
                                 )}
                             >
                                 {sub.title}
-                            </Link>
+                            </AnchorAwareLink>
                         );
                     })}
                 </div>

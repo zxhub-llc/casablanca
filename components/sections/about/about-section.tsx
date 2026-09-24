@@ -18,6 +18,7 @@ import { PalmShadowOverlay } from "@/components/palm-shadow-overlay";
 gsap.registerPlugin(ScrollTrigger);
 
 interface AboutSectionProps {
+    id: string;
     abouts?: ZXAboutBlock[];
     highlight?: string;
     heroImage?: string;
@@ -26,6 +27,7 @@ interface AboutSectionProps {
 }
 
 export default function AboutSection({
+    id,
     abouts = [],
     heroImage,
     heroMobile,

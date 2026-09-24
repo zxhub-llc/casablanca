@@ -230,9 +230,7 @@ export async function getTeam(
 
 // LOCATIONS
 
-export async function getAllLocations(): Promise<
-    ZXLocation[]
-> {
+export async function getAllLocations(): Promise<ZXLocation[]> {
 
     const data =
         await graphqlFetchGraceful<{
@@ -359,15 +357,16 @@ export async function getLayoutDataFull(
 // ── SLIDER ────────────────────────────────────────────────────
 
 export async function getSlider(
-    id: number
+    id: number,
+    lang?: string
 ): Promise<ZXSlider | null> {
     const data = await graphqlFetchGraceful<{
         zxSlider: ZXSlider | null;
     }>(
         Q.GET_SLIDER,
         { zxSlider: null },
-        { id },
-        ["slider", `slider-${id}`],
+        { id, lang },
+        ["slider", `slider-${id}`, lang ?? "default"],
         CACHE_TTL.misc
     );
 
@@ -377,15 +376,16 @@ export async function getSlider(
 // ── HERO ──────────────────────────────────────────────────────
 
 export async function getHeroById(
-    id: number
+    id: number,
+    lang?: string
 ): Promise<ZXHero | null> {
     const data = await graphqlFetchGraceful<{
         zxHero: ZXHero | null;
     }>(
         Q.GET_HERO,
         { zxHero: null },
-        { id },
-        ["hero", `hero-${id}`],
+        { id, lang },
+        ["hero", `hero-${id}`, lang ?? "default"],
         CACHE_TTL.misc
     );
 
@@ -393,15 +393,16 @@ export async function getHeroById(
 }
 
 export async function getHeroBySlug(
-    slug: string
+    slug: string,
+    lang?: string
 ): Promise<ZXHero | null> {
     const data = await graphqlFetchGraceful<{
         zxHero: ZXHero | null;
     }>(
         Q.GET_HERO,
         { zxHero: null },
-        { slug },
-        ["hero", `hero-${slug}`],
+        { slug, lang },
+        ["hero", `hero-${slug}`, lang ?? "default"],
         CACHE_TTL.misc
     );
 
@@ -647,36 +648,33 @@ export async function getNewsletters(
 //
 // Uso:
 //   const page = await getZxPageBySlug(slug, lang);
-//   const hero = await resolveHeroFromSections(page?.sections);
+//   const sections = parseSections(page?.sections);
+//   const hero = await resolveHeroFromSections(sections, lang);
 //
 export async function resolveHeroFromSections(
-    sections?: ZXSectionParsed[]
+    sections?: ZXSectionParsed[],
+    lang?: string
 ): Promise<ZXHero | null> {
     if (!sections) {
         return null;
     }
 
     const heroSection = sections.find(
-        (
-            s
-        ): s is Extract<
-            ZXSectionParsed,
-            { layout: "hero" }
-        > => s.layout === "hero"
+        (s): s is Extract<ZXSectionParsed, { layout: "hero" }> =>
+            s.layout === "hero"
     );
 
     if (!heroSection) {
         return null;
     }
 
-    const heroId =
-        heroSection.data.hero;
+    const heroId = heroSection.data.hero;
 
     if (!heroId) {
         return null;
     }
 
-    return getHeroById(heroId);
+    return getHeroById(heroId, lang);
 }
 
 export async function getPaymentGateways(

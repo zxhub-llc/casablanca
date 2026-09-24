@@ -11,6 +11,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
 
 interface FaqSectionProps {
+    id: string;
     faqs: ZXFaq[];
     title?: string;
     description?: string;
@@ -21,6 +22,7 @@ interface FaqSectionProps {
 }
 
 export default function FaqSection({
+    id,
     faqs,
     title,
     description,

@@ -57,7 +57,7 @@ export default function ContactSection({
                     title={highlight}
                 />
             )}
-            <Section className="relative w-full max-w-screen min-h-screen px-4 sm:px-4 md:px-4 lg:px-8 py-0 md:py-0">
+            <Section id={id ?? "contact"} className="relative w-full max-w-screen min-h-screen px-4 sm:px-4 md:px-4 lg:px-8 py-0 md:py-0">
                 {!showBanner && (
                     <>
                         <Image

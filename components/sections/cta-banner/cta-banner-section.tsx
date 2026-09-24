@@ -34,11 +34,9 @@ export default function CtaBannerSection({
 }: CtaBannerSectionProps) {
     const rootRef = useRef<HTMLElement>(null);
 
-    // Si solo hay una de las dos imágenes, se usa en ambos breakpoints
     const desktopSrc = backgroundImage || backgroundMobile || null;
     const mobileSrc = backgroundMobile || backgroundImage || null;
 
-    // Split por palabras para el reveal (cada palabra dentro de una "máscara")
     const words = (title ?? "").trim().split(/\s+/).filter(Boolean);
 
     useGSAP(
@@ -46,14 +44,10 @@ export default function CtaBannerSection({
             const root = rootRef.current;
             if (!root) return;
 
-            // selector con scope explícito (funciona también dentro de matchMedia)
             const q = gsap.utils.selector(root);
             const mm = gsap.matchMedia();
 
-            // Si el usuario prefiere menos movimiento, no animamos nada:
-            // el contenido queda visible tal cual lo renderiza React.
             mm.add("(prefers-reduced-motion: no-preference)", () => {
-                // 1) Parallax suave del fondo, ligado al scroll
                 gsap.fromTo(
                     q("[data-cta-bg]"),
                     { yPercent: -5, scale: 1.08 },
@@ -70,7 +64,6 @@ export default function CtaBannerSection({
                     }
                 );
 
-                // 2) Entrada del contenido (una sola vez al llegar a la sección)
                 const tl = gsap.timeline({
                     defaults: { ease: "power3.out" },
                     scrollTrigger: {
@@ -109,10 +102,11 @@ export default function CtaBannerSection({
 
     return (
         <section
+            id={id ?? "cta_banner"}
             ref={rootRef}
             className="relative isolate w-full min-h-[90vh] md:min-h-screen overflow-hidden bg-[#001125]"
         >
-            {/* ── FONDO ─────────────────────────────── */}
+
             <div className="absolute inset-0 -z-10 overflow-hidden">
                 {(desktopSrc || mobileSrc) && (
                     <div
@@ -142,12 +136,10 @@ export default function CtaBannerSection({
                     </div>
                 )}
 
-                {/* degradados del diseño: claro arriba (legibilidad del texto) → azul profundo abajo */}
                 <div className="absolute inset-x-0 top-0 h-2/5 bg-linear-to-b from-brand-background to-transparent pointer-events-none z-10" />
                 <div className="absolute inset-x-0 bottom-0 h-2/5 bg-linear-to-t from-[#001125] to-transparent" />
             </div>
 
-            {/* ── CONTENIDO ─────────────────────────── */}
             <Container className="w-full max-w-screen mx-auto pt-8 lg:pt-14 px-4 sm:px-4 md:px-4 lg:px-8 rounded-3xl overflow-hidden relative flex min-h-[90vh] md:min-h-screen flex-col items-center justify-start text-center text-foreground">
                 {highlight && (
                     <span

@@ -10,7 +10,7 @@ interface HeroSectionProps {
 
 export function HeroSection({ hero, id }: HeroSectionProps) {
   if (hero.type === "slider" && hero.slider) {
-    return <HeroSlider slider={hero.slider} />;
+    return <HeroSlider slider={hero.slider} id={id} />;
   }
 
   if (hero.type === "static" && hero.static) {
@@ -18,6 +18,7 @@ export function HeroSection({ hero, id }: HeroSectionProps) {
       <HeroStatic
         hero={hero.static}
         title={hero.title}
+        id={id}
       />
     );
   }

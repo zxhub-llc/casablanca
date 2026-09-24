@@ -21,11 +21,13 @@ import { Slider } from './components/slider'
 import { ZXSlide, ZXSlider } from '@/lib/graphql'
 
 interface HeroSliderProps {
+  id: string;
   slider: ZXSlider
   className?: string
 }
 
 export function HeroSlider({
+  id,
   slider,
   className,
 }: HeroSliderProps) {
@@ -37,20 +39,14 @@ export function HeroSlider({
     const video = activeSlideElement?.querySelector('video')
 
     if (video) {
-      // Si el slide tiene un video, detenemos temporalmente el contador visual de autoplay
       swiper.autoplay.stop()
-
-      // Forzamos al video a reproducirse desde el inicio
       video.currentTime = 0
       video.play().catch(() => { })
-
-      // Cuando el video termine, avanzamos al siguiente de manera segura y sincronizada con la paginación
       video.onended = () => {
         swiper.slideNext()
         swiper.autoplay.start()
       }
     } else {
-      // Si es una imagen común, reanudamos el delay por defecto
       if (slider.autoplay) {
         swiper.params.autoplay = {
           delay: defaultDelay,
@@ -63,6 +59,7 @@ export function HeroSlider({
 
   return (
     <section
+      id={id ?? "hero"}
       className={cn(
         'hero-slider relative h-screen w-full overflow-hidden bg-brand-foreground',
         className

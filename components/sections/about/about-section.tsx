@@ -44,27 +44,23 @@ export default function AboutSection({
             {showBanner && (
                 <Banner image={heroImage} mobile={heroMobile} title={about.title} />
             )}
-
-            {hasVideo ? (
-                <>
+            <section id={id ?? "about"} className="relative flex min-h-screen w-full items-center overflow-hidden bg-background">
+                {hasVideo ? (
                     <PinnedVideoAbout about={about} />
-                    {features.length > 0 && (
-                        <Section className="w-full max-w-screen overflow-hidden px-4 lg:px-8 bg-background">
-                            <Container className="w-full max-w-screen mx-auto py-8 lg:py-14 px-4 lg:px-8">
-                                <BentoFeatures
-                                    items={features}
-                                    titleKey="title"
-                                    descriptionKey="description"
-                                    iconKey="icon"
-                                    itemClassName="border-2 border-border/70 bg-background"
-                                />
-                            </Container>
-                        </Section>
-                    )}
-                </>
-            ) : (
-                <StaticAbout about={about} />
-            )}
+                ) : features.length > 0 ? (
+                    <Container className="w-full max-w-screen mx-auto py-8 lg:py-14 px-4 lg:px-8">
+                        <BentoFeatures
+                            items={features}
+                            titleKey="title"
+                            descriptionKey="description"
+                            iconKey="icon"
+                            itemClassName="border-2 border-border/70 bg-background"
+                        />
+                    </Container>
+                ) : (
+                    <StaticAbout about={about} />
+                )}
+            </section>
         </>
     );
 }
@@ -139,7 +135,6 @@ function PinnedVideoAbout({ about }: { about: ZXAboutBlock }) {
                 },
             });
 
-            // 1. El encabezado se va
             if (isDesktop) {
                 tl.to(headingRevealRef.current, {
                     y: -60,
@@ -151,7 +146,6 @@ function PinnedVideoAbout({ about }: { about: ZXAboutBlock }) {
                 });
             }
 
-            // 2. El video se abre (height 0 → auto)
             tl.to(
                 videoContainerRef.current,
                 {
@@ -166,10 +160,8 @@ function PinnedVideoAbout({ about }: { about: ZXAboutBlock }) {
                 isDesktop ? "-=1.2" : ">+=0.2"
             );
 
-            // 3. Aparece el CTA
             tl.to(ctaRef.current, { opacity: 1, duration: 0.5, ease: "power2.out" }, "-=0.2");
 
-            // 4. Pausa final antes de soltar el pin
             tl.to({}, { duration: 1.5 });
         }, sectionRef);
 

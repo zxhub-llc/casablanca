@@ -58,7 +58,6 @@ export default function ServicesSection({
 
         const mm = gsap.matchMedia();
 
-        // ── DESKTOP ──
         mm.add("(min-width: 1024px)", () => {
             const cards = gsap.utils.toArray<HTMLElement>("[data-service-card]", sectionRef.current);
 
@@ -104,11 +103,9 @@ export default function ServicesSection({
             };
         });
 
-        // ── MÓVIL: stacking con el mismo pin que desktop ──
         mm.add("(max-width: 1023px)", () => {
             const cards = gsap.utils.toArray<HTMLElement>("[data-service-card]", sectionRef.current);
 
-            // convierte el grid en un stack: todas las cards ocupan el mismo espacio
             gsap.set(cardsWrapRef.current, { position: "relative" });
             gsap.set(cards, { position: "absolute", top: 0, left: 0, width: "100%", height: "100%" });
 
@@ -134,14 +131,12 @@ export default function ServicesSection({
             cards.forEach((card, i) => {
                 if (i === 0) return;
 
-                // card entrante, tapa a la anterior
                 tl.to(
                     card,
                     { opacity: 1, y: 0, duration: 1, ease: "power2.out" },
                     i === 1 ? 0 : "-=0.35"
                 );
 
-                // card anterior se hunde/reduce, queda "debajo" de la pila
                 tl.to(
                     cards[i - 1],
                     {
@@ -173,6 +168,7 @@ export default function ServicesSection({
             )}
 
             <section
+                id={id ?? "services"}
                 ref={sectionRef}
                 className="relative flex min-h-screen w-full items-center overflow-hidden bg-secondary"
             >

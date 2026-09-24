@@ -67,7 +67,7 @@ export function Footer({
     <div className="bg-[#001125] px-4 pb-4 md:px-6 md:py-6">
       <footer
         className="bg-secondary w-full max-w-screen mx-auto text-black pt-8 lg:pt-12 px-4 sm:px-4 md:px-4 lg:px-8 rounded-3xl overflow-hidden">
-        <div className="w-full max-w-8xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-6 gap-8 md:gap-12 lg:gap-16">
+        <div className="lg:h-40 w-full max-w-8xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-6 gap-8 md:gap-12 lg:gap-16 items-start">
           {/* LEFT */}
           <div className="lg:col-span-2 space-y-6 flex flex-col items-center justify-center lg:items-start lg:justify-start">
             <Link href="/" className="flex items-center justify-center">
@@ -106,7 +106,7 @@ export function Footer({
         </div>
 
         {/* BIG TEXT */}
-        <div className="lg:h-60 flex items-center justify-center">
+        <div className="lg:h-80 flex items-center justify-center">
           <TextGradientEffect text="CASA BLANCA" />
         </div>
 

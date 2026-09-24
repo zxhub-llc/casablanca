@@ -50,7 +50,7 @@ export default function FaqSection({
                         mobile={heroMobile}
                         title={highlight}
                     />
-                    <Section className="w-full max-w-screen overflow-hidden px-4 sm:px-4 md:px-4 lg:px-8 bg-background">
+                    <Section id={id ?? "faq"} className="w-full max-w-screen overflow-hidden px-4 sm:px-4 md:px-4 lg:px-8 bg-background">
                         <Container className="w-full max-w-screen mx-auto pt-8 lg:pt-14 px-4 sm:px-4 md:px-4 lg:px-8 rounded-3xl overflow-hidden">
 
                             {/* Encabezado General de la Sección */}

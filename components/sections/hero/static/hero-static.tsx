@@ -5,11 +5,13 @@ import { Button } from '@/components/ui/button'
 import { ZXHeroStatic } from '@/lib/graphql'
 
 interface HeroStaticProps {
+  id: string
   hero: ZXHeroStatic
   title?: string
 }
 
 export function HeroStatic({
+  id,
   hero,
   title,
 }: HeroStaticProps) {
@@ -21,7 +23,7 @@ export function HeroStatic({
         : 'items-center text-center'
 
   return (
-    <section className="relative h-screen md:h-[100dvh] w-screen overflow-hidden">
+    <section id={id ?? "hero"} className="relative h-screen md:h-[100dvh] w-screen overflow-hidden">
       {hero.imageUrl && (
         <img
           src={hero.imageUrl}

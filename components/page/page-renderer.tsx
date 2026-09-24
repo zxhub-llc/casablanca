@@ -210,8 +210,8 @@ export default async function PageRenderer({
 
                             return (
                                 <HeroSection
-                                    id={section.id}
                                     key={i}
+                                    id={section.layout}
                                     hero={hero}
                                 />
                             );
@@ -238,8 +238,8 @@ export default async function PageRenderer({
 
                             return (
                                 <AboutSection
-                                    id={section.id}
                                     key={i}
+                                    id={section.layout}
                                     abouts={filtered}
                                     highlight={section.data.highlight}
                                     heroImage={section.data.heroImage}
@@ -266,8 +266,8 @@ export default async function PageRenderer({
 
                             return (
                                 <FeaturesSection
-                                    id={section.id}
                                     key={i}
+                                    id={section.layout}
                                     features={filtered}
                                     title={section.data.title}
                                     description={section.data.description}
@@ -295,8 +295,8 @@ export default async function PageRenderer({
 
                             return (
                                 <ServicesSection
-                                    id={section.id}
                                     key={i}
+                                    id={section.layout}
                                     services={filtered}
                                     title={section.data.title}
                                     description={section.data.description}
@@ -325,8 +325,8 @@ export default async function PageRenderer({
 
                             return (
                                 <FaqSection
-                                    id={section.id}
                                     key={i}
+                                    id={section.layout}
                                     faqs={filtered}
                                     title={section.data.title}
                                     description={section.data.description}
@@ -355,8 +355,8 @@ export default async function PageRenderer({
 
                             return (
                                 <NewsletterSection
-                                    id={section.id}
                                     key={i}
+                                    id={section.layout}
                                     newsletter={filtered[0]}
                                 />
                             );
@@ -376,8 +376,8 @@ export default async function PageRenderer({
 
                             return (
                                 <GallerySection
-                                    id={section.id}
                                     key={i}
+                                    id={section.layout}
                                     items={filtered}
                                     highlight={section.data.highlight}
                                     title={section.data.title}
@@ -396,8 +396,8 @@ export default async function PageRenderer({
 
                             return (
                                 <CaseStudiesSection
-                                    id={section.id}
                                     key={i}
+                                    id={section.layout}
                                     items={filtered}
                                     highlight={section.data.highlight}
                                     title={section.data.title}
@@ -410,8 +410,8 @@ export default async function PageRenderer({
 
                             return (
                                 <CtaBannerSection
-                                    id={section.id}
                                     key={i}
+                                    id={section.layout}
                                     title={section.data.title}
                                     description={section.data.description}
                                     highlight={section.data.highlight}
@@ -451,8 +451,8 @@ export default async function PageRenderer({
 
                             return (
                                 <ContactSection
-                                    id={section.id}
                                     key={i}
+                                    id={section.layout}
                                     contact={form}
                                     highlight={section.data.highlight}
                                     title={section.data.title}

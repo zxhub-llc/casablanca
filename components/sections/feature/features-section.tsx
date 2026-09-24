@@ -39,7 +39,6 @@ export default function FeaturesSection({
     const descriptionRef = useRef<HTMLDivElement>(null);
     const isVisible = useInView(sectionRef, { once: true, margin: "-100px" });
 
-    // titleKey="title" | descriptionKey="desc" | iconKey="image"
     const content = useMemo(
         () =>
             features.map((f) => ({
@@ -94,6 +93,7 @@ export default function FeaturesSection({
 
     return (
         <Section
+            id={id ?? "features"}
             className={cn(
                 "w-full max-w-screen overflow-hidden px-4 sm:px-4 md:px-4 lg:px-8",
                 showBanner ? "bg-background" : "bg-brand-background"

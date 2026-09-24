@@ -13,10 +13,7 @@ interface FooterMenuColumnProps {
 export function FooterMenuColumn({ item }: FooterMenuColumnProps) {
     const hasChildren = !!item.children?.length;
 
-    const isPlaceholder =
-        item.url === "#" ||
-        item.url === "/#" ||
-        !item.url;
+    const isPlaceholder = !item.anchorTarget && (item.url === "#" || item.url === "/#" || !item.url);
 
     return (
         <div className="flex flex-col gap-6">
@@ -24,7 +21,7 @@ export function FooterMenuColumn({ item }: FooterMenuColumnProps) {
             {isPlaceholder ? (
                 <div
                     className={cn(
-                        "text-sm font-semibold uppercase tracking-wide",
+                        "text-sm font-semibold uppercase tracking-wide text-nowrap text-center md:text-start",
                         "text-foreground"
                     )}
                 >
@@ -35,7 +32,7 @@ export function FooterMenuColumn({ item }: FooterMenuColumnProps) {
                     href={item.url}
                     anchorTarget={item.anchorTarget}
                     className={cn(
-                        "text-sm font-semibold uppercase tracking-wide",
+                        "text-sm font-semibold uppercase tracking-wide text-nowrap text-center md:text-start",
                         "text-foreground transition-colors hover:text-primary"
                     )}
                 >

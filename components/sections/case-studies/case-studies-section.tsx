@@ -76,7 +76,6 @@ export default function CaseStudiesSection({
     const slides = useMemo<Photo[][]>(() => chunk(photos, perSlide), [photos, perSlide]);
     const total = slides.length;
 
-    // el breakpoint cambia el tamaño de slide → el índice puede quedar fuera de rango
     useEffect(() => {
         setIndex((i) => Math.min(i, Math.max(total - 1, 0)));
     }, [total]);
@@ -147,10 +146,8 @@ export default function CaseStudiesSection({
             tl.to({}, { duration: 0.8 });
         };
 
-        // ── DESKTOP: título centrado → sube → entran las fotos del primer slide ──
         mm.add("(min-width: 1024px)", buildPinTimeline);
 
-        // ── MÓVIL: mismo pin, mosaico de 3 ──
         mm.add("(max-width: 1023px)", buildPinTimeline);
 
         return () => mm.revert();
@@ -173,6 +170,7 @@ export default function CaseStudiesSection({
 
     return (
         <section
+            id={id ?? "case_studies"}
             ref={sectionRef}
             className="relative flex min-h-screen w-full items-center overflow-hidden bg-background"
         >

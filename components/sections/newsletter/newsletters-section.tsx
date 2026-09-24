@@ -52,7 +52,7 @@ export default function NewsletterSection({
     }
 
     return (
-        <Section className="bg-background">
+        <Section id={id ?? "newsletter"} className="bg-background">
             <Container>
 
                 <div className="relative overflow-hidden rounded-3xl bg-slate-950">

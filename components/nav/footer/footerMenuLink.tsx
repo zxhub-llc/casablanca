@@ -11,10 +11,7 @@ interface FooterMenuLinkProps {
 export function FooterMenuLink({ item }: FooterMenuLinkProps) {
     const hasChildren = !!item.children?.length;
 
-    const isPlaceholder =
-        item.url === "#" ||
-        item.url === "/#" ||
-        !item.url;
+    const isPlaceholder = !item.anchorTarget && (item.url === "#" || item.url === "/#" || !item.url);
 
     return (
         <div className="flex flex-col gap-2">

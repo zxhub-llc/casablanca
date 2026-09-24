@@ -25,7 +25,6 @@ export default function GallerySection({
     const sectionRef = useRef<HTMLElement>(null);
     const galleryWrapRef = useRef<HTMLDivElement>(null);
 
-    // El diseño usa 1 grande + 4 pequeñas
     const visible = items.filter((i) => i.thumbnail || i.fullUrl).slice(0, 5);
 
     useLayoutEffect(() => {
@@ -33,7 +32,6 @@ export default function GallerySection({
 
         const mm = gsap.matchMedia();
 
-        // ── DESKTOP: título centrado → sube → entran las imágenes ──
         mm.add("(min-width: 1024px)", () => {
             const els = gsap.utils.toArray<HTMLElement>(
                 "[data-gallery-item]",
@@ -56,14 +54,12 @@ export default function GallerySection({
                 },
             });
 
-            // 1. Se abre el espacio y el título sube solo
             tl.to(galleryWrapRef.current, {
                 height: "auto",
                 duration: 1.5,
                 ease: "power2.inOut",
             });
 
-            // 2. Entran las imágenes de derecha a izquierda
             tl.to(
                 els,
                 {
@@ -77,11 +73,9 @@ export default function GallerySection({
                 "-=0.6"
             );
 
-            // 3. Pausa final antes de soltar el pin
             tl.to({}, { duration: 0.8 });
         });
 
-        // ── MÓVIL: sin pin, cada imagen entra desde la derecha ──
         mm.add("(max-width: 1023px)", () => {
             const els = gsap.utils.toArray<HTMLElement>(
                 "[data-gallery-item]",
@@ -114,11 +108,11 @@ export default function GallerySection({
 
     return (
         <section
+            id={id ?? "gallery"}
             ref={sectionRef}
             className="relative flex min-h-screen w-full items-center overflow-hidden bg-background"
         >
             <div className="mx-auto w-full max-w-[1500px] px-4 py-12 lg:px-8 lg:py-0">
-                {/* ENCABEZADO (los hijos usan motion, GSAP no lo toca) */}
                 {(highlight || title) && (
                     <div className="mx-auto max-w-5xl space-y-5 text-center">
                         {highlight && (
@@ -147,7 +141,6 @@ export default function GallerySection({
                     </div>
                 )}
 
-                {/* GALERÍA: en desktop arranca con height 0 y GSAP la abre */}
                 <div ref={galleryWrapRef} className="lg:h-0 lg:overflow-hidden">
                     <div className="grid grid-cols-2 gap-3 pt-8 lg:h-[58vh] lg:grid-cols-[2fr_1fr_1fr] lg:grid-rows-2 lg:gap-3 lg:pt-0 lg:mt-10">
                         {visible.map((item, i) => (

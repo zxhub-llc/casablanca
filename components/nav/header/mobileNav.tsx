@@ -181,10 +181,7 @@ function MobileNavLink({
 
   const hasChildren = !!item.children?.length;
 
-  const isPlaceholder =
-    item.url === "#" ||
-    item.url === "/#" ||
-    !item.url;
+  const isPlaceholder = !item.anchorTarget && (item.url === "#" || item.url === "/#" || !item.url);
 
   const [open, setOpen] = React.useState(false);
 

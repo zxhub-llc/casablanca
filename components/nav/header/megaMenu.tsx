@@ -29,7 +29,7 @@ export function MegaMenu({ items }: MegaMenuProps) {
 function MegaMenuItem({ item }: { item: ZXMenuItem }) {
     const hasChildren = !!item.children?.length;
     const isExactActive = useActiveRoute(item.url, true);
-    const isPlaceholder = item.url === "#" || item.url === "/#" || !item.url;
+    const isPlaceholder = !item.anchorTarget && (item.url === "#" || item.url === "/#" || !item.url);
 
     const [activeChild, setActiveChild] = useState<ZXMenuItem | null>(null);
 
@@ -121,7 +121,7 @@ interface MegaMenuChildProps {
 function MegaMenuChild({ item, onHover, isSelected }: MegaMenuChildProps) {
     const isActive = useActiveRoute(item.url, true);
     const hasChildren = !!item.children?.length;
-    const isPlaceholder = item.url === "#" || item.url === "/#" || !item.url;
+    const isPlaceholder = !item.anchorTarget && (item.url === "#" || item.url === "/#" || !item.url);
 
     const childClasses = cn(
         "flex items-center gap-1 md:text-sm lg:text-md xl:text-lg uppercase font-bold mb-2 transition-colors cursor-pointer",

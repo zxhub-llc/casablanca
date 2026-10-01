@@ -55,14 +55,14 @@ export function HeroStatic({
           </div>
 
           {hero.title && (
-            <h1 className="text-[52px] font-black font-jakarta md:font-extrabold leading-tight md:text-[150px] text-center md:text-start">
+            <h1 className="font-cormorant text-[52px] font-medium leading-tight text-center md:text-[180px] md:text-start">
               {hero.title}
             </h1>
           )}
           <div
-            className="flex w-full md:w-2xl items-center justify-between h-20 md:h-10 ">
+            className="flex w-full md:w-7xl items-center justify-between h-20 md:h-10 ">
             {hero.subtitle && (
-              <p className="mb-0 md:mb-4 text-sm md:text-md leading-tight md:text-lg font-semibold md:font-medium uppercase text-white/80 text-center md:text-start">
+              <p className="mb-0 text-sm leading-tight font-bold uppercase tracking-[0.12em] text-white md:mb-4 md:text-lg md:font-medium md:text-start text-center [text-shadow:0_2px_8px_rgba(0,0,0,0.75)]">
                 {hero.subtitle}
               </p>
             )}

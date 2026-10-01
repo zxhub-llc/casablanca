@@ -3,6 +3,7 @@ import "../globals.css";
 import {
   Inter,
   Plus_Jakarta_Sans,
+  Cormorant_Garamond
 } from "next/font/google";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Analytics } from "@vercel/analytics/react";
@@ -15,16 +16,21 @@ import type { Metadata } from "next";
 import { getCTA, getMenu, getSite } from "@/lib/graphql";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-const interHeading = Inter({ subsets: ['latin'], variable: '--font-heading' });
-
-const plusJakartaSans = Plus_Jakarta_Sans({
-  subsets: ['latin'],
-  variable: '--font-sans'
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
 });
 
-const fontJakarta = Plus_Jakarta_Sans({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-jakarta",
+});
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  variable: "--font-cormorant",
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 export async function generateMetadata({
@@ -81,12 +87,21 @@ export default async function RootLayout({
       getCTA(lang),
     ]);
   return (
-    <html translate="no" lang={lang} suppressHydrationWarning className={cn("font-sans", plusJakartaSans.variable, interHeading.variable)}>
+    <html
+      translate="no"
+      lang={lang}
+      suppressHydrationWarning
+      className={cn(
+        inter.variable,
+        jakarta.variable,
+        cormorant.variable,
+      )}
+    >
       <head>
         <meta name="google" content="notranslate" />
         <meta name="microsoft" content="notranslate" />
       </head>
-      <body className={cn("min-h-screen font-sans antialiased bg-secondary", plusJakartaSans.variable, fontJakarta.variable)}>
+      <body className="min-h-screen bg-secondary font-jakarta antialiased">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

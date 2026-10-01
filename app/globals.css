@@ -22,7 +22,19 @@
     font-family: var(--font-jakarta), sans-serif;
 }
 
+@utility font-cormorant {
+    font-family: var(--font-cormorant), serif;
+}
+
+@utility font-inter {
+    font-family: var(--font-inter), sans-serif;
+}
+
 @theme {
+    --font-sans: var(--font-jakarta);
+    --font-jakarta: var(--font-jakarta);
+    --font-cormorant: var(--font-cormorant);
+    --font-inter: var(--font-inter);
     --shadow-input:
         0px 2px 3px -1px rgba(0, 0, 0, 0.1),
         0px 1px 0px 0px rgba(25, 28, 33, 0.02),
